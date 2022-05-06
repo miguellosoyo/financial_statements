@@ -191,24 +191,18 @@ styles = [
 df.set_table_styles(styles)
 
 # Definir formato CSS para eliminar los índices de la tabla, centrar encabezados, aplicar líneas de separación y cambiar tipografía
-hide_table_row_index = """
+table_markdown_style = """
                         <style>
-                        tbody th {display:none;}
-                        .blank {display:none;}
                         .col_heading {font-family: monospace; border: 3px solid white; text-align: center !important;}
                         </style>
                        """
 
 # Integrar el CSS con Markdown
-st.markdown(hide_table_row_index, unsafe_allow_html=True)
+st.markdown(table_markdown_style, unsafe_allow_html=True)
 
 # Integrar el DataFrame a la aplicación Web
+df.set_index(0, inplace=True)
 st.table(df)
 
 # Insertar una nota al pie de la tabla
 st.caption('This is a string that explains something above.')
-
-# pd.set_option("max_colwidth", None)
-# Exportar en formato Excel
-# df.to_excel('/content/drive/MyDrive/ARTF/1. Hojas de Trabajo/Streamlit/Ferromex ERI.xlsx', index=False) 
-# df.to_html('/content/drive/MyDrive/ARTF/1. Hojas de Trabajo/Streamlit/Ferromex ERI.html') 
