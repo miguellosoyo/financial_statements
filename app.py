@@ -33,7 +33,8 @@ with st.sidebar:
 
   # Definir un menú de selección para los diferentes reportes financieros
   st.subheader('Reportes Financieros')
-  report_elements = ['Balance General', 'Estado de Resultados', 'Flujos de Efectivo']
+  # report_elements = ['Balance General', 'Estado de Resultados', 'Flujos de Efectivo']
+  report_elements = ['Balance General', 'Estado de Resultados', ]
   report = st.selectbox(label='Selección de Reporte Financiero', options=report_elements)
 
 # Evaluar el tipo de reporte seleccionado
