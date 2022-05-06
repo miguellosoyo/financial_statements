@@ -201,7 +201,6 @@ table_markdown_style = """
 st.markdown(table_markdown_style, unsafe_allow_html=True)
 
 # Integrar el DataFrame a la aplicación Web
-df.set_index(0, inplace=True)
 st.table(df)
 
 # Insertar una nota al pie de la tabla
