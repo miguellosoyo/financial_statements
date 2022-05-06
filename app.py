@@ -193,10 +193,11 @@ df.set_table_styles(styles)
 # Definir formato CSS para eliminar los índices de la tabla, centrar encabezados, aplicar líneas de separación y cambiar tipografía
 table_markdown_style = """
                         <style>
+                        tbody th {display:none;}
+                        .blank {display:none;}
                         .col_heading {font-family: monospace; border: 3px solid white; text-align: center !important;}
                         </style>
                        """
-
 # Integrar el CSS con Markdown
 st.markdown(table_markdown_style, unsafe_allow_html=True)
 
