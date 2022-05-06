@@ -80,7 +80,7 @@ if st.checkbox('Vertical y Horizontal'):
   columns_v = [f'{x} V' for x in years]
 
   # Calcular el análisis vertical del reporte correspondiente
-  df[columns_v] = df.div(df[variable], axis=1)
+  df[columns] = df[years].div(df[variable], axis=1)
    
   # Columnas de Análisis Horizontal
   columns_h = [f'{int(x)-1}-{x}' for i, x in enumerate(years) if i > 0]
@@ -110,7 +110,7 @@ elif st.checkbox('Vertical'):
   columns = [f'{x} V' for x in years]
 
   # Calcular el análisis vertical del reporte correspondiente
-  df[columns] = df.div(df[variable], axis=1)
+  df[columns] = df[years].div(df[variable], axis=1)
 
   # Eliminar valores NaN e infinitos
   df.replace([np.inf, -np.inf], np.nan, inplace=True)
