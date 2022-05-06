@@ -81,7 +81,7 @@ if st.checkbox('Vertical y Horizontal'):
   columns_v = [f'{x} V' for x in years]
 
   # Calcular el análisis vertical del reporte correspondiente
-  denominator = df[df['Concepto']==variable].drop('Concepto', axis=1)
+  denominator = df[df['Concepto']==variable].drop('Concepto', axis=1).values
   df[columns_v] = df[years].div(denominator, axis=1)
    
   # Columnas de Análisis Horizontal
@@ -112,7 +112,7 @@ elif st.checkbox('Vertical'):
   columns = [f'{x} V' for x in years]
 
   # Calcular el análisis vertical del reporte correspondiente
-  denominator = df[df['Concepto']==variable].drop('Concepto', axis=1)
+  denominator = df[df['Concepto']==variable].drop('Concepto', axis=1).values
   df[columns] = df[years].div(denominator, axis=1)
 
   # Eliminar valores NaN e infinitos
