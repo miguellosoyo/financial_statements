@@ -39,16 +39,13 @@ with st.sidebar:
 # Evaluar el tipo de reporte seleccionado
 if report=='Balance General':
   data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ESF.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
-  variable = 'Activo Total'
-
+  
 elif report=='Estado de Resultados':
   data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
-  variable = 'Ingresos por servicios'
 
 elif report=='Flujos de Efectivo':
   data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
-  variable = 'Ingresos por servicios'
-
+  
 # Obtener los periodos de estudio
 years = data.columns.tolist()
 
@@ -57,6 +54,9 @@ data.reset_index(inplace=True)
 data.columns = [x.strip() for x in data.columns]
 columns = data.columns.tolist()
 data['Concepto'] = [x.strip() for x in data['Concepto'].values]
+
+# Definir la variable de comparación en caso de requerir Análisis Vertical
+variable = data['Concepto'][0]
 
 # Definir elementos de la página
 st.title('Información Financiera')  
@@ -80,7 +80,7 @@ if st.checkbox('Vertical y Horizontal'):
   columns_v = [f'{x} V' for x in years]
 
   # Calcular el análisis vertical del reporte correspondiente
-  df[columns] = df[years].div(df[variable], axis=1)
+  df[columns_v] = df[years].div(df[variable], axis=1)
    
   # Columnas de Análisis Horizontal
   columns_h = [f'{int(x)-1}-{x}' for i, x in enumerate(years) if i > 0]
