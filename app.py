@@ -398,7 +398,7 @@ elif analysis=='Análisis de Inversiones':
                           </style>
                         """
   # Integrar el valor presente neto (VPN)
-  st.subheader(f'Valor Presente Neto de {licensee}: $ {round(vpn,2)}')
+  st.subheader(f'Valor Presente Neto de {licensee}: $ {round(vpn,2)/1000000}')
   
   # Integrar métricas de WACC, TIR, tasa de reinversión (TRI), diferencia entre TIR y WACC, diferencia entre TRI y WACC
   col1, col2, col3, col4, = st.columns(4)
