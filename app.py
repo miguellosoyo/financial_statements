@@ -26,7 +26,7 @@ with st.sidebar:
 
   # Definir un menú de selección para los concesionarios
   st.subheader('Tipos de Análisis')
-  analysis_elements = ('Estados Financieros', 'Análisis de Inversiones',)
+  analysis_elements = sorted(('Estados Financieros', 'Análisis de Inversiones',))
   analysis = st.radio('Selección de Análisis', options=analysis_elements)
 
 if analysis=='Estados Financieros':
@@ -286,7 +286,7 @@ elif analysis=='Análisis de Inversiones':
   df['Flujos de Efectivo Descontados'] = dcf
 
   # Calcular la Tasa Interna de Retorno con los FLujos de Efectivo
-  irr = np.irr(df['Flujos de Efectivo'].tolist())
+  # irr = np.irr(df['Flujos de Efectivo'].tolist())
 
   # Transponer DataFrame para presentar
   df = df[['Pago Concesión', inv_type, 'Ingresos Totales', 'Flujos de Efectivo', 'Flujos de Efectivo Descontados']].T
