@@ -401,7 +401,7 @@ elif analysis=='Análisis de Inversiones':
   st.subheader(f'Valor Presente Neto de {licensee}: $ {round(vpn,2)}')
   
   # Integrar métricas de WACC, TIR, tasa de reinversión (TRI), diferencia entre TIR y WACC, diferencia entre TRI y WACC
-  col1, col2, col3, col4, = st.columns(5)
+  col1, col2, col3, col4, = st.columns(4)
   col1.metric('WACC', f'{wacc_value*100}%')
   col2.metric('TIR', f'{round(irr*100,2)}%')
   col3.metric('TIR - WACC', f'{round((irr-wacc_value)*100,2)}%')
