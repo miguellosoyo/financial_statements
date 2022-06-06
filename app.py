@@ -305,7 +305,7 @@ elif analysis=='Análisis de Inversiones':
   df = pd.concat([df_inv, df_cf], axis=1).fillna(0)
 
   # Calcular los flujos de efectivo
-  df['Flujos de Efectivo'] = df[cf_type] - df[inv_type] - df['Pago Concesión']
+  df['Flujos de Efectivo'] = df[cf_type] + df['Amortización y Depreciación'] - df[inv_type] - df['Pago Concesión']
 
   # Obtener los flujos de efectivo descontados
   dcf = []
