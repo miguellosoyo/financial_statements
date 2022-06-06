@@ -278,7 +278,7 @@ elif analysis=='Análisis de Inversiones':
     st.subheader('Periodo de Selección')
     years = [investments['Año'].min(), investments['Año'].max()]
     range_years = st.slider('Seleccione el rango de años a analizar', int(years[0]), int(years[-1]), (int(years[0]), int(years[-1])))
-    years = [str(x) for x in range(range_years[0],range_years[-1]+1)]
+    years = list(range(range_years[0],range_years[-1]+1))
         
     # Definir un menú de selección para los concesionarios
     st.subheader('Concesionarios')
