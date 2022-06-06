@@ -443,8 +443,6 @@ if authentication_status:
                             .col_heading {font-family: monospace; border: 3px solid white; text-align: center !important;}
                             </style>
                           """
-    # Integrar el valor presente neto (VPN)
-    
     
     # Integrar métricas de WACC, TIR, tasa de reinversión (TRI), diferencia entre TIR y WACC, diferencia entre TRI y WACC
     col1, col2, col3, col4, col5 = st.columns(5)
