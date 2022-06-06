@@ -311,7 +311,8 @@ elif analysis=='Análisis de Inversiones':
   df_cf['NOPAT'] = df_cf['Utilidad de Operación']*(1-0.3)
   
   # Obtener el dato del WACC del concesionario
-  wacc_value = wacc[(wacc['Concesionario']==licensee) & (wacc['Año']==year)]['WACC'].values[0]
+  wacc_value = wacc[(wacc['Concesionario']==licensee) & (wacc['Año']==year)]['WACC'].values
+  st.text(f'{wacc_value}')
   
   # Concatenar información
   df = pd.concat([df_inv, df_cf], axis=1).fillna(0)
