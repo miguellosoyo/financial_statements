@@ -248,7 +248,7 @@ elif analysis=='Análisis de Inversiones':
     dr = st.number_input('Ingresar la tasa de descuento (en decimales)')
 
   # Evaluar si la tasa de descuento es menor a 1
-  while dr>1:
+  if dr>1:
     st.subheader(f'''
                   La tasa de descuento que ha ingresado es incorrecta. Favor de verificar que sean valores decimales.
                   ''')
