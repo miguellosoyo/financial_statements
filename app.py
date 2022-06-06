@@ -75,7 +75,7 @@ if analysis=='Estados Financieros':
 
     # Definir un menú de selección para los diferentes reportes financieros
     st.subheader('Reportes Financieros')
-    report_elements = ['Balance General', 'Estado de Resultados', 'Flujos de Efectivo']
+    report_elements = ['Balance General', 'Estado de Resultados', 'Estado de Flujos de Efectivo']
     report = st.selectbox(label='Selección de Reporte Financiero', options=report_elements)
 
   # Evaluar el tipo de reporte seleccionado
@@ -149,7 +149,7 @@ if analysis=='Estados Financieros':
       
     # Mostrar información financiera
     st.subheader(f'''
-                Análisis Vertical y Horizontal del Estado de Resultados de {licensee}
+                Análisis Vertical y Horizontal del {report} de {licensee}
                 ''')
       
   # Evaluar si se requiere calcular el análisis vertical
@@ -174,7 +174,7 @@ if analysis=='Estados Financieros':
       
     # Mostrar información financiera
     st.subheader(f'''
-                Análisis Vertical del Estado de Resultados de {licensee}
+                Análisis Vertical del {report} de {licensee}
                 ''')
     
   # Seleccionar que se efectue el análisis horizontal
@@ -198,7 +198,7 @@ if analysis=='Estados Financieros':
       
     # Mostrar información financiera
     st.subheader(f'''
-                Análisis Vertical del Estado de Resultados de {licensee}
+                Análisis Vertical del {report} de {licensee}
                 ''')
 
   # En caso de no seleccionar ninguna opción, mostrar la información
