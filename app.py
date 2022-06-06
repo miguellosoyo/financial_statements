@@ -60,7 +60,7 @@ with st.sidebar:
   st.subheader('Tipos de Análisis')
   analysis_elements = sorted(('Estados Financieros', 'Análisis de Inversiones',))
   analysis = st.radio('Selección de Análisis', options=analysis_elements)
-
+analysis='Análisis de Inversiones'
 # Evaluar si es un análisis financiero el que se quiere realizar
 if analysis=='Estados Financieros':
 
@@ -311,8 +311,7 @@ elif analysis=='Análisis de Inversiones':
   df_cf['NOPAT'] = df_cf['Utilidad de Operación']*(1-0.3)
   
   # Obtener el dato del WACC del concesionario
-  wacc_value = wacc[(wacc['Concesionario']==licensee) & (wacc['Año']==year)]['WACC'].values
-  st.text(f'{wacc_value}')
+  wacc_value = wacc[(wacc['Concesionario']==licensee.upper()) & (wacc['Año']==year)]['WACC'].values[0]
   
   # Concatenar información
   df = pd.concat([df_inv, df_cf], axis=1).fillna(0)
@@ -340,7 +339,7 @@ elif analysis=='Análisis de Inversiones':
     balance = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ESF.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
   
   # Calcular la tasa de reinversión (TRI) acumulada
-  rir = df[inv_type].sum() - df['Amortización y Depreciación'].sum() + (balance.loc['Activo circulante',:].sum() - balance.loc['Efectivo y equivalentes de efectivo	',:].sum()) / df['NOPAT'].sum()
+  rir = df[inv_type].sum() - df['Amortización y Depreciación'].sum() + (balance.loc['Activo circulante',:].sum() - balance.loc['Efectivo y equivalentes de efectivo',:].sum()) / df['NOPAT'].sum()
   
   # Transponer DataFrame para presentar
   df = df[['Pago Concesión', inv_type, cf_type, 'Amortización y Depreciación', 'Flujos de Efectivo', 'Flujos de Efectivo Descontados']].T
@@ -398,7 +397,7 @@ elif analysis=='Análisis de Inversiones':
   col2.metric('TIR', irr)
   col3.metric('TRI', rir)
   col4.metric('TIR - WACC', irr-wacc_value)
-  col4.metric('TRI - WACC', tri-wacc_value)
+  col4.metric('TRI - WACC', rir-wacc_value)
 
   # Integrar el CSS con Markdown
   st.markdown(hide_table_row_index, unsafe_allow_html=True)
