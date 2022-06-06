@@ -338,6 +338,9 @@ elif analysis=='Análisis de Inversiones':
   except:
     balance = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ESF.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
   
+  # Calcular VPN
+  vpn = df['Flujos de Efectivo Descontados'].sum()
+  
   # Calcular la tasa de reinversión (TRI) acumulada
   capex = df.loc[year, inv_type]
   am = df.loc[year, 'Amortización y Depreciación']
@@ -396,11 +399,12 @@ elif analysis=='Análisis de Inversiones':
                         """
 
   # Integrar métricas de WACC, TIR, tasa de reinversión (TRI), diferencia entre TIR y WACC, diferencia entre TRI y WACC
-  col1, col2, col3, col4 = st.columns(4)
-  col1.metric('WACC', f'{wacc_value*100}%')
-  col2.metric('TIR', f'{round(irr*100,2)}%')
-  col3.metric('TIR - WACC', f'{round((irr-wacc_value)*100,2)}%')
-  col4.metric('TRI', round(rir,2))
+  col1, col2, col3, col4 = st.columns(5)
+  col1.metric('VPN', f'$ {vpn}')
+  col2.metric('WACC', f'{wacc_value*100}%')
+  col3.metric('TIR', f'{round(irr*100,2)}%')
+  col4.metric('TIR - WACC', f'{round((irr-wacc_value)*100,2)}%')
+  col5.metric('TRI', round(rir,2))
   
   # Integrar el CSS con Markdown
   st.markdown(hide_table_row_index, unsafe_allow_html=True)
