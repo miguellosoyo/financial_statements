@@ -304,7 +304,7 @@ elif analysis=='Análisis de Inversiones':
   cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows.csv', encoding='utf-8', na_values='-').fillna(0)
     
   # Filtrar información por concesionario y seleccionar las variables de interés
-  df_inv = investments[investments['Concesionario']==licensee][['Año', inv_type]].reset_index(drop=True).copy().set_index('Año')
+  df_inv = investments[investments['Concesionario']==licensee.upper()][['Año', inv_type]].reset_index(drop=True).copy().set_index('Año')
   df_cf = cash_flows[cash_flows['Concesionario']==licensee].reset_index(drop=True).copy().set_index('Año')
   
   # Calcular NOPAT
@@ -339,7 +339,11 @@ elif analysis=='Análisis de Inversiones':
     balance = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ESF.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
   
   # Calcular la tasa de reinversión (TRI) acumulada
-  rir = df[inv_type].sum() - df['Amortización y Depreciación'].sum() + (balance.loc['Activo circulante',:].sum() - balance.loc['Efectivo y equivalentes de efectivo',:].sum()) / df['NOPAT'].sum()
+  capex = df.loc[year, inv_type]
+  am = df.loc[year, 'Amortización y Depreciación']
+  non_cash_wc = (balance.loc['Activo circulante', f'{year}'] - balance.loc['Efectivo y equivalentes de efectivo', f'{year}'])
+  nopat = df.loc[year, 'NOPAT']
+  rir = (capex - am + non_cash_wc) / nopat
   
   # Transponer DataFrame para presentar
   df = df[['Pago Concesión', inv_type, cf_type, 'Amortización y Depreciación', 'Flujos de Efectivo', 'Flujos de Efectivo Descontados']].T
@@ -393,12 +397,11 @@ elif analysis=='Análisis de Inversiones':
 
   # Integrar métricas de WACC, TIR, tasa de reinversión (TRI), diferencia entre TIR y WACC, diferencia entre TRI y WACC
   col1, col2, col3, col4 = st.columns(4)
-  col1.metric('WACC', wacc_value)
-  col2.metric('TIR', irr)
-  col3.metric('TRI', rir)
-  col4.metric('TIR - WACC', irr-wacc_value)
-  col4.metric('TRI - WACC', rir-wacc_value)
-
+  col1.metric('WACC', f'{wacc_value*100}%')
+  col2.metric('TIR', f'{irr*100}%')
+  col3.metric('TIR - WACC', f'{irr-wacc_value*100}%')
+  col4.metric('TRI', round(rir,2))
+  
   # Integrar el CSS con Markdown
   st.markdown(hide_table_row_index, unsafe_allow_html=True)
   
