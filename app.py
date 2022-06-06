@@ -270,7 +270,16 @@ elif analysis=='Análisis de Inversiones':
   
   # Integrar a la barra lateral la selección de concesionarios, campo para poner la tasa de descuento y la lista de variables para inversiones y flujos de efectivo
   with st.sidebar:
-
+    
+    # Importar información de las inversiones de los concesionarios
+    investments = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Investments.csv', encoding='latin', na_values='-').fillna(0)
+    
+    # Definir una línea de selección de periodos
+    st.subheader('Periodo de Selección')
+    years = [investments['Año'].min(), investments['Año'].max()]
+    range_years = st.slider('Seleccione el rango de años a analizar', int(years[0]), int(years[-1]), (int(years[0]), int(years[-1])))
+    years = [str(x) for x in range(range_years[0],range_years[-1]+1)]
+    
     # Definir un menú de selección para los concesionarios
     st.subheader('Concesionarios')
     licensee_elements = sorted(['KCSM', 'Ferrosur', 'Ferromex'])
@@ -278,10 +287,7 @@ elif analysis=='Análisis de Inversiones':
 
     # Definir el campo para ingresa la tasa de descuento
     dr = st.number_input('Ingresar la tasa de descuento',)/100
-
-    # Importar información de las inversiones de los concesionarios
-    investments = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Investments.csv', encoding='latin', na_values='-').fillna(0)
-
+    
     # Definir una lista con la selección de inversiones
     inv_type = st.selectbox(label='Seleccione el Tipo de Inversión a Analizar', options=investments.columns[2:].tolist())
 
