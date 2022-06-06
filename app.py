@@ -308,7 +308,7 @@ elif analysis=='Análisis de Inversiones':
   df_cf = cash_flows[cash_flows['Concesionario']==licensee].reset_index(drop=True).copy().set_index('Año')
   
   # Calcular NOPAT
-  df_cf['NOPAT'] = df_cf['Utilidad de  Operación']*(1-0.3)
+  df_cf['NOPAT'] = df_cf['Utilidad de Operación']*(1-0.3)
   
   # Obtener el dato del WACC del concesionario
   wacc_value = wacc[(wacc['Concesionario']==licensee) & (wacc['Año']==year)]['WACC'].values[0]
