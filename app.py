@@ -321,7 +321,7 @@ elif analysis=='Análisis de Inversiones':
   irr = irr(df['Flujos de Efectivo'].tolist())
 
   # Transponer DataFrame para presentar
-  df = df[['Pago Concesión', inv_type, cf_type, 'Flujos de Efectivo', 'Flujos de Efectivo Descontados']].T
+  df = df[['Pago Concesión', inv_type, cf_type, 'Amortización y Depreciación', 'Flujos de Efectivo', 'Flujos de Efectivo Descontados']].T
   df.reset_index(inplace=True)
 
   # Renombrar columna de índice
