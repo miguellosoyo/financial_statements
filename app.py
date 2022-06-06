@@ -71,7 +71,10 @@ with st.sidebar:
   password = st.text_input('Contraseña', type='password')
 
 # Obtener los datos que ingresará el usuario
-authentication_status = (username in usernames) & (password in passwords)
+if username=='' and password=='':
+  authentication_status = None
+else:
+  authentication_status = (username in usernames) & (password in passwords)
 
 # Evaluar los eventos identificados durante el login
 if authentication_status:
