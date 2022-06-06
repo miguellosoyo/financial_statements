@@ -53,381 +53,409 @@ def irr(values, guess=0.1, tol=1e-12, maxiter=100):
   # Devolver valor nulo en caso de no hallar la TIR
   return np.nan
 
-# Integrar a la barra lateral la selección de tipo de análisis
+# Definir usuarios y contraseñas
+names = ['César','Angélica', 'Paola', 'Edith']
+usernames = ['cesar_artf','angelica_artf', 'paola_artf', 'edith_artf']
+passwords = ['Sandía99.','Sandía99.', 'Sandía99.', 'Sandía99.']
+
+# Generar el objeto de autenticación
 with st.sidebar:
+  
+  # Integrar título del área de login
+  st.header('Iniciar Sesión')
 
-  # Definir un menú de selección para los concesionarios
-  st.subheader('Tipos de Análisis')
-  analysis_elements = sorted(('Estados Financieros', 'Análisis de Inversiones',))
-  analysis = st.radio('Selección de Análisis', options=analysis_elements)
+  # Incorprar el cuadro de ingreso del usuario
+  username = st.text_input('Usuario')
 
-# Evaluar si es un análisis financiero el que se quiere realizar
-if analysis=='Estados Financieros':
+  # Incorprar el cuadro de ingreso de la 
+  password = st.text_input('Contraseña', type='password')
 
-  # Integrar a la barra lateral la selección de concesionarios y tipo de reporte
+# Obtener los datos que ingresará el usuario
+authentication_status = (username in usernames) & (password in passwords)
+
+# Evaluar los eventos identificados durante el login
+if authentication_status:
+  
+  # Integrar a la barra lateral la selección de tipo de análisis
   with st.sidebar:
 
     # Definir un menú de selección para los concesionarios
-    st.subheader('Concesionarios')
-    licensee_elements = sorted(['KCSM', 'Ferrosur', 'Ferromex'])
-    licensee = st.selectbox(label='Selección de Concesionarios', options=licensee_elements)
+    st.subheader('Tipos de Análisis')
+    analysis_elements = sorted(('Estados Financieros', 'Análisis de Inversiones',))
+    analysis = st.radio('Selección de Análisis', options=analysis_elements)
 
-    # Definir un menú de selección para los diferentes reportes financieros
-    st.subheader('Reportes Financieros')
-    report_elements = ['Balance General', 'Estado de Resultados', 'Estado de Flujos de Efectivo']
-    report = st.selectbox(label='Selección de Reporte Financiero', options=report_elements)
+  # Evaluar si es un análisis financiero el que se quiere realizar
+  if analysis=='Estados Financieros':
 
-  # Evaluar el tipo de reporte seleccionado
-  if report=='Balance General':
-    try:
-      data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ESF.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
-    except:
-      data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ESF.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
-    
-  elif report=='Estado de Resultados':
-    try:
-      data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
-    except:
-      data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
-  elif report=='Estado de Flujos de Efectivo':
-    try:
-      data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
-    except:
-      data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
-  # Obtener los periodos de estudio
-  years = data.columns.tolist()
+    # Integrar a la barra lateral la selección de concesionarios y tipo de reporte
+    with st.sidebar:
 
-  # Integrar a la barra lateral una línea de selección de periodos
-  with st.sidebar:
+      # Definir un menú de selección para los concesionarios
+      st.subheader('Concesionarios')
+      licensee_elements = sorted(['KCSM', 'Ferrosur', 'Ferromex'])
+      licensee = st.selectbox(label='Selección de Concesionarios', options=licensee_elements)
 
-    # Definir una línea de selección de periodos
-    st.subheader('Periodo de Selección')
-    range_years = st.slider('Seleccione el rango de años a analizar', int(years[0]), int(years[-1]), (int(years[0]), int(years[-1])))
-    years = [str(x) for x in range(range_years[0],range_years[-1]+1)]
+      # Definir un menú de selección para los diferentes reportes financieros
+      st.subheader('Reportes Financieros')
+      report_elements = ['Balance General', 'Estado de Resultados', 'Estado de Flujos de Efectivo']
+      report = st.selectbox(label='Selección de Reporte Financiero', options=report_elements)
 
-  # Eliminar espacios en blanco de los encabezados y conceptos
-  data.reset_index(inplace=True)
-  data.columns = [x.strip() for x in data.columns]
-  data = data[['Concepto']+years]
-  columns = data.columns.tolist()
-  data['Concepto'] = [x.strip() for x in data['Concepto'].values]
-
-  # Definir la variable de comparación en caso de requerir Análisis Vertical
-  variable = data['Concepto'][0]
-
-  # Definir elementos de la página
-  st.title('Información Financiera')  
-
-  st.write('''
-          Estados Financieros del Concesionario
-          ''')
-
-  # Ingresar subtítulo para selección de tipo de análisis
-  st.write('''
-          ### Seleccione el Tipo de Análisis que quiera visualizar
-          ''')
-
-  # Seleccionar Análisis Vertical y Horizontal
-  if st.checkbox('Vertical y Horizontal'):
+    # Evaluar el tipo de reporte seleccionado
+    if report=='Balance General':
+      try:
+        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ESF.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
+      except:
+        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ESF.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
       
-    # Hacer una copia de la información
-    df = data.copy()
-    
-    # Columnas de Análisis Vertical
-    columns_v = [f'{x} V' for x in years]
+    elif report=='Estado de Resultados':
+      try:
+        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
+      except:
+        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
+    elif report=='Estado de Flujos de Efectivo':
+      try:
+        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
+      except:
+        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
+    # Obtener los periodos de estudio
+    years = data.columns.tolist()
 
-    # Calcular el análisis vertical del reporte correspondiente
-    denominator = df[df['Concepto']==variable].drop('Concepto', axis=1)
-    df[columns_v] = df[years].div(denominator.values, axis=1)
-      
-    # Columnas de Análisis Horizontal
-    columns_h = [f'{int(x)-1}-{x}' for i, x in enumerate(years) if i > 0]
+    # Integrar a la barra lateral una línea de selección de periodos
+    with st.sidebar:
 
-    # Calcular el análisis horizontal
-    df[columns_h] = df[years].pct_change(axis=1).iloc[:, 1:]
-    
-    # Eliminar valores NaN e infinitos
-    df.replace([np.inf, -np.inf], np.nan, inplace=True)
-    df.fillna(0, inplace=True)
-    
-    # Aplicar definir formato de la tabla
-    format = {x:("{:,.0f}" if i<len(years) else "{:.2%}") for i, x in enumerate(years+columns_v+columns_h)}
-      
-    # Mostrar información financiera
-    st.subheader(f'''
-                Análisis Vertical y Horizontal del {report} de {licensee}
-                ''')
-      
-  # Evaluar si se requiere calcular el análisis vertical
-  elif st.checkbox('Vertical'):
-      
-    # Hacer una copia de la información
-    df = data.copy()
-    
-    # Columnas de Análisis Vertical
-    columns = [f'{x} V' for x in years]
+      # Definir una línea de selección de periodos
+      st.subheader('Periodo de Selección')
+      range_years = st.slider('Seleccione el rango de años a analizar', int(years[0]), int(years[-1]), (int(years[0]), int(years[-1])))
+      years = [str(x) for x in range(range_years[0],range_years[-1]+1)]
 
-    # Calcular el análisis vertical del reporte correspondiente
-    denominator = df[df['Concepto']==variable].drop('Concepto', axis=1)
-    df[columns] = df[years].div(denominator.values, axis=1)
+    # Eliminar espacios en blanco de los encabezados y conceptos
+    data.reset_index(inplace=True)
+    data.columns = [x.strip() for x in data.columns]
+    data = data[['Concepto']+years]
+    columns = data.columns.tolist()
+    data['Concepto'] = [x.strip() for x in data['Concepto'].values]
 
-    # Eliminar valores NaN e infinitos
-    df.replace([np.inf, -np.inf], np.nan, inplace=True)
-    df.fillna(0, inplace=True)
-    
-    # Definir el formato para aplicar en la tabla
-    format = {x:("{:,.0f}" if i<len(years) else "{:.2%}") for i, x in enumerate(years+columns)}
-      
-    # Mostrar información financiera
-    st.subheader(f'''
-                Análisis Vertical del {report} de {licensee}
-                ''')
-    
-  # Seleccionar que se efectue el análisis horizontal
-  elif st.checkbox('Horizontal'):
-      
-    # Hacer una copia de la información
-    df = data.copy()
-    
-    # Columnas de Análisis Horizontal
-    columns = [f'{int(x)-1}-{x}' for i, x in enumerate(years) if i > 0]
+    # Definir la variable de comparación en caso de requerir Análisis Vertical
+    variable = data['Concepto'][0]
 
-    # Calcular el análisis horizontal
-    df[columns] = df[years].pct_change(axis=1).iloc[:, 1:]
-    
-    # Eliminar valores NaN e infinitos
-    df.replace([np.inf, -np.inf], np.nan, inplace=True)
-    df.fillna(0, inplace=True)
-    
-    # Definir el formato para aplicar en la tabla
-    format = {x:("{:,.0f}" if i<len(years) else "{:.2%}") for i, x in enumerate(years+columns)}
-      
-    # Mostrar información financiera
-    st.subheader(f'''
-                Análisis Vertical del {report} de {licensee}
-                ''')
+    # Definir elementos de la página
+    st.title('Información Financiera')  
 
-  # En caso de no seleccionar ninguna opción, mostrar la información
-  else:
-      
-    # Definir el tipo de formato para aplicar en la tabla
-    df = data.copy()
-    format = {x:("{:,.0f}" if i < len(years) else "{:.2%}") for i, x in enumerate(years)}
-    
-    # Mostrar información financiera
-    st.subheader(f'''
-                Estado de Resultados de {licensee}
-                ''')
+    st.write('''
+            Estados Financieros del Concesionario
+            ''')
 
-  # Aplicar el formato definido en el caso respectivo, y esconder el índice de números consecutivos
-  df = df.style.apply(highlight, axis=None).set_properties(**{'font-size': '10pt', 'font-family': 'monospace', 'border': '', 'width': '110%'}).format(format)
+    # Ingresar subtítulo para selección de tipo de análisis
+    st.write('''
+            ### Seleccione el Tipo de Análisis que quiera visualizar
+            ''')
 
-  # Definir las propiedades de estilo para los encabezados
-  th_props = [
-              ('font-size', '12pt'),
-              ('text-align', 'center'),
-              ('font-weight', 'bold'),
-              ('color', 'white'),
-              ('background-color', '#328f1d')
-              ]
-
-  # Definir las propiedades de estilo para la información de la tabla
-  td_props = [
-              ('font-size', '8pt'),
-              ('width', '110%'),
-              ]
-
-  # Integrar los estilos en una variable de estilos
-  styles = [
-            dict(selector='th', props=th_props),
-            dict(selector='td', props=td_props)
-            ]
-
-  # Aplicar formatos
-  df.set_table_styles(styles)
-
-  # Definir formato CSS para eliminar los índices de la tabla, centrar encabezados, aplicar líneas de separación y cambiar tipografía
-  hide_table_row_index = """
-                          <style>
-                          tbody th {display:none;}
-                          .blank {display:none;}
-                          .col_heading {font-family: monospace; border: 3px solid white; text-align: center !important;}
-                          </style>
-                        """
-
-  # Integrar el CSS con Markdown
-  st.markdown(hide_table_row_index, unsafe_allow_html=True)
-
-  # Integrar el DataFrame a la aplicación Web
-  # df.data.set_index('Concepto', inplace=True)
-  st.table(df)
-
-  # Insertar una nota al pie de la tabla
-  st.caption(f'Información financiera de {licensee}.')
-
-# Evaluar si es un análisis de inversiones
-elif analysis=='Análisis de Inversiones':
-  
-  # Integrar a la barra lateral la selección de concesionarios, campo para poner la tasa de descuento y la lista de variables para inversiones y flujos de efectivo
-  with st.sidebar:
-    
-    # Importar información de las inversiones de los concesionarios
-    investments = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Investments.csv', encoding='latin', na_values='-').fillna(0)
-    
-    # Importar información de los flujos de efectivo de los concesionarios
-    cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows.csv', encoding='utf-8', na_values='-').fillna(0)
-  
-    # Definir una línea de selección de periodos
-    st.subheader('Periodo de Selección')
-    years = [cash_flows['Año'].min(), cash_flows['Año'].max()]
-    range_years = st.slider('Seleccione el rango de años a analizar', int(years[0]), int(years[-1]), (int(years[0]), int(years[-1])))
-    years = list(range(range_years[0],range_years[-1]+1))
+    # Seleccionar Análisis Vertical y Horizontal
+    if st.checkbox('Vertical y Horizontal'):
         
-    # Definir un menú de selección para los concesionarios
-    st.subheader('Concesionarios')
-    licensee_elements = sorted(['KCSM', 'Ferrosur', 'Ferromex'])
-    licensee = st.selectbox(label='Selección de Concesionarios', options=licensee_elements)
+      # Hacer una copia de la información
+      df = data.copy()
+      
+      # Columnas de Análisis Vertical
+      columns_v = [f'{x} V' for x in years]
 
-    # Definir el campo para ingresa la tasa de descuento
-    dr = st.number_input('Ingresar la tasa de descuento',)/100
-    
-    # Definir una lista con la selección de inversiones
-    inv_type = st.selectbox(label='Seleccione el Tipo de Inversión a Analizar', options=investments.columns[2:].tolist())
+      # Calcular el análisis vertical del reporte correspondiente
+      denominator = df[df['Concepto']==variable].drop('Concepto', axis=1)
+      df[columns_v] = df[years].div(denominator.values, axis=1)
+        
+      # Columnas de Análisis Horizontal
+      columns_h = [f'{int(x)-1}-{x}' for i, x in enumerate(years) if i > 0]
 
-    # Definir una lista con la selección de flujos de efectivo
-    cf_type = st.selectbox(label='Seleccione el Tipo de Flujo de Efectivo a Analizar', options=sorted(['Ingresos Totales', 'NOPAT', 'Utilidad de  Operación', 'Utilidad Neta']))
-    
-    # Importar información del WACC
-    wacc = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/WACC.csv', encoding='utf-8', na_values='-').fillna(0)
-    
-    # Integrar una lista de los años disponibles del WACC
-    year = st.selectbox(label='Seleccione el Año del que desea el WACC', options=sorted(wacc['Año'].unique().tolist()))
-    
-  # Evaluar si la tasa de descuento es menor a 1
-  if dr>1:
-    st.subheader(f'''
-                  La tasa de descuento que ha ingresado es incorrecta. Favor de verificar que sean valores decimales.
+      # Calcular el análisis horizontal
+      df[columns_h] = df[years].pct_change(axis=1).iloc[:, 1:]
+      
+      # Eliminar valores NaN e infinitos
+      df.replace([np.inf, -np.inf], np.nan, inplace=True)
+      df.fillna(0, inplace=True)
+      
+      # Aplicar definir formato de la tabla
+      format = {x:("{:,.0f}" if i<len(years) else "{:.2%}") for i, x in enumerate(years+columns_v+columns_h)}
+        
+      # Mostrar información financiera
+      st.subheader(f'''
+                  Análisis Vertical y Horizontal del {report} de {licensee}
                   ''')
-    
-  # Filtrar DataFrames por periodo seleccionado
-  investments = investments[investments['Año'].isin(years)]
-  cash_flows = cash_flows[cash_flows['Año'].isin(years)]
-  
-  # Filtrar información por concesionario y seleccionar las variables de interés
-  df_inv = investments[investments['Concesionario']==licensee.upper()][['Año', inv_type]].reset_index(drop=True).copy().set_index('Año')
-  df_cf = cash_flows[cash_flows['Concesionario']==licensee].reset_index(drop=True).copy().set_index('Año')
-  
-  # Calcular NOPAT
-  df_cf['NOPAT'] = df_cf['Utilidad de Operación']*(1-0.3)
-  
-  # Obtener el dato del WACC del concesionario
-  wacc_value = wacc[(wacc['Concesionario']==licensee.upper()) & (wacc['Año']==year)]['WACC'].values[0]
-  
-  # Concatenar información
-  df = pd.concat([df_inv, df_cf], axis=1).fillna(0)
+        
+    # Evaluar si se requiere calcular el análisis vertical
+    elif st.checkbox('Vertical'):
+        
+      # Hacer una copia de la información
+      df = data.copy()
+      
+      # Columnas de Análisis Vertical
+      columns = [f'{x} V' for x in years]
 
-  # Calcular los flujos de efectivo
-  df['Flujos de Efectivo'] = df[cf_type] + df['Amortización y Depreciación'] - df[inv_type] - df['Pago Concesión']
-    
-  # Obtener los flujos de efectivo descontados
-  dcf = []
-  for i, x in enumerate(df['Flujos de Efectivo'].values):
-    
-    # Descontar los flujos de efectivo y asignarlos
-    dcf.append(x/((1+dr)**i))
-    
-  # Integrar los flujos de efectivo descontados al DataFrame
-  df['Flujos de Efectivo Descontados'] = dcf
+      # Calcular el análisis vertical del reporte correspondiente
+      denominator = df[df['Concepto']==variable].drop('Concepto', axis=1)
+      df[columns] = df[years].div(denominator.values, axis=1)
 
-  # Calcular la Tasa Interna de Retorno con los FLujos de Efectivo
-  irr = irr(df['Flujos de Efectivo'].tolist())
-  
-  # Importar información para el cálculo de la tasa de reinversión
-  try:
-    balance = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ESF.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
-  except:
-    balance = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ESF.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
-  
-  # Calcular VPN
-  vpn = df['Flujos de Efectivo Descontados'].sum()
-  
-  # Calcular la tasa de reinversión (TRI) acumulada
-  capex = df.loc[year, inv_type]
-  am = df.loc[year, 'Amortización y Depreciación']
-  non_cash_wc = (balance.loc['Activo circulante', f'{year}'] - balance.loc['Efectivo y equivalentes de efectivo', f'{year}'])
-  nopat = df.loc[year, 'NOPAT']
-  rir = (capex - am + non_cash_wc) / nopat
-  
-  # Transponer DataFrame para presentar
-  df = df[['Pago Concesión', inv_type, cf_type, 'Amortización y Depreciación', 'Flujos de Efectivo', 'Flujos de Efectivo Descontados']].T
-  df.reset_index(inplace=True)
+      # Eliminar valores NaN e infinitos
+      df.replace([np.inf, -np.inf], np.nan, inplace=True)
+      df.fillna(0, inplace=True)
+      
+      # Definir el formato para aplicar en la tabla
+      format = {x:("{:,.0f}" if i<len(years) else "{:.2%}") for i, x in enumerate(years+columns)}
+        
+      # Mostrar información financiera
+      st.subheader(f'''
+                  Análisis Vertical del {report} de {licensee}
+                  ''')
+      
+    # Seleccionar que se efectue el análisis horizontal
+    elif st.checkbox('Horizontal'):
+        
+      # Hacer una copia de la información
+      df = data.copy()
+      
+      # Columnas de Análisis Horizontal
+      columns = [f'{int(x)-1}-{x}' for i, x in enumerate(years) if i > 0]
 
-  # Renombrar columna de índice
-  df.columns = [str(x) for x in df.columns]
-  df.rename(columns={'index':'Concepto'}, inplace=True)
+      # Calcular el análisis horizontal
+      df[columns] = df[years].pct_change(axis=1).iloc[:, 1:]
+      
+      # Eliminar valores NaN e infinitos
+      df.replace([np.inf, -np.inf], np.nan, inplace=True)
+      df.fillna(0, inplace=True)
+      
+      # Definir el formato para aplicar en la tabla
+      format = {x:("{:,.0f}" if i<len(years) else "{:.2%}") for i, x in enumerate(years+columns)}
+        
+      # Mostrar información financiera
+      st.subheader(f'''
+                  Análisis Vertical del {report} de {licensee}
+                  ''')
 
-  # Definir el formato para aplicar en la tabla
-  columns = df.columns.tolist()[1:]
+    # En caso de no seleccionar ninguna opción, mostrar la información
+    else:
+        
+      # Definir el tipo de formato para aplicar en la tabla
+      df = data.copy()
+      format = {x:("{:,.0f}" if i < len(years) else "{:.2%}") for i, x in enumerate(years)}
+      
+      # Mostrar información financiera
+      st.subheader(f'''
+                  Estado de Resultados de {licensee}
+                  ''')
 
-  # Definir el formato para aplicar en la tabla
-  format = {x:"{:,.0f}" for i, x in enumerate(columns)}
+    # Aplicar el formato definido en el caso respectivo, y esconder el índice de números consecutivos
+    df = df.style.apply(highlight, axis=None).set_properties(**{'font-size': '10pt', 'font-family': 'monospace', 'border': '', 'width': '110%'}).format(format)
 
-  # Aplicar el formato definido en el caso respectivo, y esconder el índice de números consecutivos
-  df = df.style.apply(highlight, axis=None).set_properties(**{'font-size': '10pt', 'font-family': 'monospace', 'border': '', 'width': '110%'}).format(format)
+    # Definir las propiedades de estilo para los encabezados
+    th_props = [
+                ('font-size', '12pt'),
+                ('text-align', 'center'),
+                ('font-weight', 'bold'),
+                ('color', 'white'),
+                ('background-color', '#328f1d')
+                ]
 
-  # Definir las propiedades de estilo para los encabezados
-  th_props = [
-              ('font-size', '12pt'),
-              ('text-align', 'center'),
-              ('font-weight', 'bold'),
-              ('color', 'white'),
-              ('background-color', '#328f1d')
+    # Definir las propiedades de estilo para la información de la tabla
+    td_props = [
+                ('font-size', '8pt'),
+                ('width', '110%'),
+                ]
+
+    # Integrar los estilos en una variable de estilos
+    styles = [
+              dict(selector='th', props=th_props),
+              dict(selector='td', props=td_props)
               ]
 
-  # Definir las propiedades de estilo para la información de la tabla
-  td_props = [
-              ('font-size', '8pt'),
-              ('width', '110%'),
+    # Aplicar formatos
+    df.set_table_styles(styles)
+
+    # Definir formato CSS para eliminar los índices de la tabla, centrar encabezados, aplicar líneas de separación y cambiar tipografía
+    hide_table_row_index = """
+                            <style>
+                            tbody th {display:none;}
+                            .blank {display:none;}
+                            .col_heading {font-family: monospace; border: 3px solid white; text-align: center !important;}
+                            </style>
+                          """
+
+    # Integrar el CSS con Markdown
+    st.markdown(hide_table_row_index, unsafe_allow_html=True)
+
+    # Integrar el DataFrame a la aplicación Web
+    # df.data.set_index('Concepto', inplace=True)
+    st.table(df)
+
+    # Insertar una nota al pie de la tabla
+    st.caption(f'Información financiera de {licensee}.')
+
+  # Evaluar si es un análisis de inversiones
+  elif analysis=='Análisis de Inversiones':
+    
+    # Integrar a la barra lateral la selección de concesionarios, campo para poner la tasa de descuento y la lista de variables para inversiones y flujos de efectivo
+    with st.sidebar:
+      
+      # Importar información de las inversiones de los concesionarios
+      investments = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Investments.csv', encoding='latin', na_values='-').fillna(0)
+      
+      # Importar información de los flujos de efectivo de los concesionarios
+      cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows.csv', encoding='utf-8', na_values='-').fillna(0)
+    
+      # Definir una línea de selección de periodos
+      st.subheader('Periodo de Selección')
+      years = [cash_flows['Año'].min(), cash_flows['Año'].max()]
+      range_years = st.slider('Seleccione el rango de años a analizar', int(years[0]), int(years[-1]), (int(years[0]), int(years[-1])))
+      years = list(range(range_years[0],range_years[-1]+1))
+          
+      # Definir un menú de selección para los concesionarios
+      st.subheader('Concesionarios')
+      licensee_elements = sorted(['KCSM', 'Ferrosur', 'Ferromex'])
+      licensee = st.selectbox(label='Selección de Concesionarios', options=licensee_elements)
+
+      # Definir el campo para ingresa la tasa de descuento
+      dr = st.number_input('Ingresar la tasa de descuento',)/100
+      
+      # Definir una lista con la selección de inversiones
+      inv_type = st.selectbox(label='Seleccione el Tipo de Inversión a Analizar', options=investments.columns[2:].tolist())
+
+      # Definir una lista con la selección de flujos de efectivo
+      cf_type = st.selectbox(label='Seleccione el Tipo de Flujo de Efectivo a Analizar', options=sorted(['Ingresos Totales', 'NOPAT', 'Utilidad de  Operación', 'Utilidad Neta']))
+      
+      # Importar información del WACC
+      wacc = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/WACC.csv', encoding='utf-8', na_values='-').fillna(0)
+      
+      # Integrar una lista de los años disponibles del WACC
+      year = st.selectbox(label='Seleccione el Año del que desea el WACC', options=sorted(wacc['Año'].unique().tolist()))
+      
+    # Evaluar si la tasa de descuento es menor a 1
+    if dr>1:
+      st.subheader(f'''
+                    La tasa de descuento que ha ingresado es incorrecta. Favor de verificar que sean valores decimales.
+                    ''')
+      
+    # Filtrar DataFrames por periodo seleccionado
+    investments = investments[investments['Año'].isin(years)]
+    cash_flows = cash_flows[cash_flows['Año'].isin(years)]
+    
+    # Filtrar información por concesionario y seleccionar las variables de interés
+    df_inv = investments[investments['Concesionario']==licensee.upper()][['Año', inv_type]].reset_index(drop=True).copy().set_index('Año')
+    df_cf = cash_flows[cash_flows['Concesionario']==licensee].reset_index(drop=True).copy().set_index('Año')
+    
+    # Calcular NOPAT
+    df_cf['NOPAT'] = df_cf['Utilidad de Operación']*(1-0.3)
+    
+    # Obtener el dato del WACC del concesionario
+    wacc_value = wacc[(wacc['Concesionario']==licensee.upper()) & (wacc['Año']==year)]['WACC'].values[0]
+    
+    # Concatenar información
+    df = pd.concat([df_inv, df_cf], axis=1).fillna(0)
+
+    # Calcular los flujos de efectivo
+    df['Flujos de Efectivo'] = df[cf_type] + df['Amortización y Depreciación'] - df[inv_type] - df['Pago Concesión']
+      
+    # Obtener los flujos de efectivo descontados
+    dcf = []
+    for i, x in enumerate(df['Flujos de Efectivo'].values):
+      
+      # Descontar los flujos de efectivo y asignarlos
+      dcf.append(x/((1+dr)**i))
+      
+    # Integrar los flujos de efectivo descontados al DataFrame
+    df['Flujos de Efectivo Descontados'] = dcf
+
+    # Calcular la Tasa Interna de Retorno con los FLujos de Efectivo
+    irr = irr(df['Flujos de Efectivo'].tolist())
+    
+    # Importar información para el cálculo de la tasa de reinversión
+    try:
+      balance = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ESF.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
+    except:
+      balance = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ESF.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
+    
+    # Calcular VPN
+    vpn = df['Flujos de Efectivo Descontados'].sum()
+    
+    # Calcular la tasa de reinversión (TRI) acumulada
+    capex = df.loc[year, inv_type]
+    am = df.loc[year, 'Amortización y Depreciación']
+    non_cash_wc = (balance.loc['Activo circulante', f'{year}'] - balance.loc['Efectivo y equivalentes de efectivo', f'{year}'])
+    nopat = df.loc[year, 'NOPAT']
+    rir = (capex - am + non_cash_wc) / nopat
+    
+    # Transponer DataFrame para presentar
+    df = df[['Pago Concesión', inv_type, cf_type, 'Amortización y Depreciación', 'Flujos de Efectivo', 'Flujos de Efectivo Descontados']].T
+    df.reset_index(inplace=True)
+
+    # Renombrar columna de índice
+    df.columns = [str(x) for x in df.columns]
+    df.rename(columns={'index':'Concepto'}, inplace=True)
+
+    # Definir el formato para aplicar en la tabla
+    columns = df.columns.tolist()[1:]
+
+    # Definir el formato para aplicar en la tabla
+    format = {x:"{:,.0f}" for i, x in enumerate(columns)}
+
+    # Aplicar el formato definido en el caso respectivo, y esconder el índice de números consecutivos
+    df = df.style.apply(highlight, axis=None).set_properties(**{'font-size': '10pt', 'font-family': 'monospace', 'border': '', 'width': '110%'}).format(format)
+
+    # Definir las propiedades de estilo para los encabezados
+    th_props = [
+                ('font-size', '12pt'),
+                ('text-align', 'center'),
+                ('font-weight', 'bold'),
+                ('color', 'white'),
+                ('background-color', '#328f1d')
+                ]
+
+    # Definir las propiedades de estilo para la información de la tabla
+    td_props = [
+                ('font-size', '8pt'),
+                ('width', '110%'),
+                ]
+
+    # Integrar los estilos en una variable de estilos
+    styles = [
+              dict(selector='th', props=th_props),
+              dict(selector='td', props=td_props)
               ]
 
-  # Integrar los estilos en una variable de estilos
-  styles = [
-            dict(selector='th', props=th_props),
-            dict(selector='td', props=td_props)
-            ]
+    # Aplicar formatos
+    df.set_table_styles(styles)
 
-  # Aplicar formatos
-  df.set_table_styles(styles)
+    # Definir formato CSS para eliminar los índices de la tabla, centrar encabezados, aplicar líneas de separación y cambiar tipografía
+    hide_table_row_index = """
+                            <style>
+                            tbody th {display:none;}
+                            .blank {display:none;}
+                            .col_heading {font-family: monospace; border: 3px solid white; text-align: center !important;}
+                            </style>
+                          """
+    # Integrar el valor presente neto (VPN)
+    
+    
+    # Integrar métricas de WACC, TIR, tasa de reinversión (TRI), diferencia entre TIR y WACC, diferencia entre TRI y WACC
+    col1, col2, col3, col4, col5 = st.columns(5)
+    col1.metric('VPN\n(miles de millones de pesos)', f'$ {round(vpn/1000000,1)}')
+    col2.metric('WACC', f'{round(wacc_value*100,1)}%')
+    col3.metric('TIR', f'{round(irr*100,1)}%')
+    col4.metric('TIR - WACC', f'{round((irr-wacc_value)*100,1)}%')
+    col5.metric('TRI', round(rir,1))
+    
+    # Integrar el CSS con Markdown
+    st.markdown(hide_table_row_index, unsafe_allow_html=True)
+    
+    # Mostrar información financiera
+    st.subheader(f'''
+                Flujos de Efectivo de {licensee}
+                ''')
+    
+    # Integrar el DataFrame a la aplicación Web
+    st.table(df)
 
-  # Definir formato CSS para eliminar los índices de la tabla, centrar encabezados, aplicar líneas de separación y cambiar tipografía
-  hide_table_row_index = """
-                          <style>
-                          tbody th {display:none;}
-                          .blank {display:none;}
-                          .col_heading {font-family: monospace; border: 3px solid white; text-align: center !important;}
-                          </style>
-                        """
-  # Integrar el valor presente neto (VPN)
-  
-  
-  # Integrar métricas de WACC, TIR, tasa de reinversión (TRI), diferencia entre TIR y WACC, diferencia entre TRI y WACC
-  col1, col2, col3, col4, col5 = st.columns(5)
-  col1.metric('VPN\n(miles de millones de pesos)', f'$ {round(vpn/1000000,1)}')
-  col2.metric('WACC', f'{round(wacc_value*100,1)}%')
-  col3.metric('TIR', f'{round(irr*100,1)}%')
-  col4.metric('TIR - WACC', f'{round((irr-wacc_value)*100,1)}%')
-  col5.metric('TRI', round(rir,1))
-  
-  # Integrar el CSS con Markdown
-  st.markdown(hide_table_row_index, unsafe_allow_html=True)
-  
-  # Mostrar información financiera
-  st.subheader(f'''
-              Flujos de Efectivo de {licensee}
-              ''')
-  
-  # Integrar el DataFrame a la aplicación Web
-  st.table(df)
+    # Insertar una nota al pie de la tabla
+    st.caption(f'Información financiera de {licensee}.')
 
-  # Insertar una nota al pie de la tabla
-  st.caption(f'Información financiera de {licensee}.')
+elif authentication_status==False:
+  st.error('Usuario/Contraseña son incorrectos')
+elif authentication_status==None:
+  st.warning('Por favor, introduzca su usuario y contraseña')
