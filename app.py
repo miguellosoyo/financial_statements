@@ -288,6 +288,12 @@ elif analysis=='Análisis de Inversiones':
     # Definir una lista con la selección de flujos de efectivo
     cf_type = st.selectbox(label='Seleccione el Tipo de Flujo de Efectivo a Analizar', options=['Ingresos Totales', 'Utilidad de  Operación', 'Utilidad Neta'])
     
+    # Importar información del WACC
+    wacc = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/WACC.csv', encoding='latin', na_values='-').fillna(0)
+    
+    # Integrar una lista de los años disponibles del WACC
+    year = st.selectbox(label='Seleccione el Año del que desea el WACC', options=sorted(wacc['Año'].unique().tolist()))
+    
   # Evaluar si la tasa de descuento es menor a 1
   if dr>1:
     st.subheader(f'''
@@ -296,14 +302,12 @@ elif analysis=='Análisis de Inversiones':
 
   # Importar información de los flujos de efectivo de los concesionarios
   cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows.csv', encoding='latin', na_values='-').fillna(0)
-  
-  # Importar información del WACC
-  
-  
+    
   # Filtrar información por concesionario y seleccionar las variables de interés
   df_inv = investments[investments['Concesionario']==licensee][['Año', inv_type]].reset_index(drop=True).copy().set_index('Año')
   df_cf = cash_flows[cash_flows['Concesionario']==licensee][['Año', cf_type, 'Amortización y Depreciación', 'Pago Concesión']].reset_index(drop=True).copy().set_index('Año')
-
+  wacc_value = wacc[(wacc['Concesionario']==licensee) & (wacc['Año']==year)]['WACC'].values[0]
+  
   # Concatenar información
   df = pd.concat([df_inv, df_cf], axis=1).fillna(0)
 
@@ -322,7 +326,10 @@ elif analysis=='Análisis de Inversiones':
 
   # Calcular la Tasa Interna de Retorno con los FLujos de Efectivo
   irr = irr(df['Flujos de Efectivo'].tolist())
-
+  
+  # Calcular la tasa de reinversión (TRI) acumulada
+  rir = 0
+  
   # Transponer DataFrame para presentar
   df = df[['Pago Concesión', inv_type, cf_type, 'Amortización y Depreciación', 'Flujos de Efectivo', 'Flujos de Efectivo Descontados']].T
   df.reset_index(inplace=True)
@@ -375,7 +382,11 @@ elif analysis=='Análisis de Inversiones':
 
   # Integrar métricas de WACC, TIR, tasa de reinversión (TRI), diferencia entre TIR y WACC, diferencia entre TRI y WACC
   col1, col2, col3, col4 = st.columns(4)
-  
+  col1.metric('WACC', wacc_value)
+  col2.metric('TIR', irr)
+  col3.metric('TRI', rir)
+  col4.metric('TIR - WACC', irr-wacc_value)
+  col4.metric('TRI - WACC', tri-wacc_value)
 
   # Integrar el CSS con Markdown
   st.markdown(hide_table_row_index, unsafe_allow_html=True)
