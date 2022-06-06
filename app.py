@@ -58,7 +58,7 @@ with st.sidebar:
 
   # Definir un menú de selección para los concesionarios
   st.subheader('Tipos de Análisis')
-  analysis_elements = ('Estados Financieros', 'Análisis de Inversiones',)
+  analysis_elements = sorted(('Estados Financieros', 'Análisis de Inversiones',))
   analysis = st.radio('Selección de Análisis', options=analysis_elements)
 
 # Evaluar si es un análisis financiero el que se quiere realizar
@@ -299,7 +299,7 @@ elif analysis=='Análisis de Inversiones':
 
   # # Filtrar información por concesionario y seleccionar las variables de interés
   df_inv = investments[investments['Concesionario']==licensee][['Año', inv_type]].reset_index(drop=True).copy().set_index('Año')
-  df_cf = cash_flows[cash_flows['Concesionario']==licensee][['Año', cf_type, 'Pago Concesión']].reset_index(drop=True).copy().set_index('Año')
+  df_cf = cash_flows[cash_flows['Concesionario']==licensee][['Año', cf_type, 'Amortización y Depreciación', 'Pago Concesión']].reset_index(drop=True).copy().set_index('Año')
 
   # Concatenar información
   df = pd.concat([df_inv, df_cf], axis=1).fillna(0)
