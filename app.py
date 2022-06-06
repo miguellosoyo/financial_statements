@@ -245,7 +245,7 @@ elif analysis=='Análisis de Inversiones':
     licensee = st.selectbox(label='Selección de Concesionarios', options=licensee_elements)
 
     # Definir el campo para ingresa la tasa de descuento
-    dr = st.number_input('Ingresar la tasa de descuento', step=0.1, value=7.1, format="%g")/100
+    dr = st.number_input('Ingresar la tasa de descuento (en decimales)',)
 
     # Importar información de las inversiones de los concesionarios
     investments = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Investments.csv', encoding='latin', na_values='-').fillna(0)
@@ -265,7 +265,7 @@ elif analysis=='Análisis de Inversiones':
   # Importar información de los flujos de efectivo de los concesionarios
   cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows.csv', encoding='latin', na_values='-').fillna(0)
 
-  # Filtrar información por concesionario y seleccionar las variables de interés
+  # # Filtrar información por concesionario y seleccionar las variables de interés
   df_inv = investments[investments['Concesionario']==licensee][['Año', inv_type]].reset_index(drop=True).copy().set_index('Año')
   df_cf = cash_flows[cash_flows['Concesionario']==licensee][['Año', cf_type, 'Pago Concesión']].reset_index(drop=True).copy().set_index('Año')
 
@@ -273,9 +273,10 @@ elif analysis=='Análisis de Inversiones':
   df = pd.concat([df_inv, df_cf], axis=1).fillna(0)
 
   # Calcular los flujos de efectivo
-  df['Flujos de Efectivo'] = df['Ingresos Totales'] - df[inv_type] - df['Pago Concesión']
+  df['Flujos de Efectivo'] = df[cf_type] - df[inv_type] - df['Pago Concesión']
 
   # Obtener los flujos de efectivo descontados
+  dr = 0.071
   dcf = []
   for i, x in enumerate(df['Flujos de Efectivo'].values):
 
@@ -286,10 +287,10 @@ elif analysis=='Análisis de Inversiones':
   df['Flujos de Efectivo Descontados'] = dcf
 
   # Calcular la Tasa Interna de Retorno con los FLujos de Efectivo
-  # irr = np.irr(df['Flujos de Efectivo'].tolist())
+  irr = np.irr(df['Flujos de Efectivo'].tolist())
 
   # Transponer DataFrame para presentar
-  df = df[['Pago Concesión', inv_type, 'Ingresos Totales', 'Flujos de Efectivo', 'Flujos de Efectivo Descontados']].T
+  df = df[['Pago Concesión', inv_type, cf_type, 'Flujos de Efectivo', 'Flujos de Efectivo Descontados']].T
   df.reset_index(inplace=True)
 
   # Renombrar columna de índice
@@ -351,8 +352,3 @@ elif analysis=='Análisis de Inversiones':
 
   # Insertar una nota al pie de la tabla
   st.caption(f'Información financiera de {licensee}.')
-
-  # pd.set_option("max_colwidth", None)
-  # Exportar en formato Excel
-  # df.to_excel('/content/drive/MyDrive/ARTF/1. Hojas de Trabajo/Streamlit/Ferromex ERI.xlsx', index=False) 
-  # df.to_html('/content/drive/MyDrive/ARTF/1. Hojas de Trabajo/Streamlit/Ferromex ERI.html') 
