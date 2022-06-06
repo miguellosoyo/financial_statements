@@ -402,7 +402,7 @@ elif analysis=='Análisis de Inversiones':
   
   # Integrar métricas de WACC, TIR, tasa de reinversión (TRI), diferencia entre TIR y WACC, diferencia entre TRI y WACC
   col1, col2, col3, col4, col5 = st.columns(5)
-  col1.metric('VPN (miles de millones de pesos)', '$ {round(vpn/1000000,2)}')
+  col1.metric('VPN (miles de millones de pesos)', f'$ {round(vpn/1000000,2)}')
   col2.metric('WACC', f'{wacc_value*100}%')
   col3.metric('TIR', f'{round(irr*100,2)}%')
   col4.metric('TIR - WACC', f'{round((irr-wacc_value)*100,2)}%')
