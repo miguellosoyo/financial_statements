@@ -41,7 +41,7 @@ if analysis=='Estados Financieros':
 
     # Definir un menú de selección para los diferentes reportes financieros
     st.subheader('Reportes Financieros')
-    report_elements = ['Balance General', 'Estado de Resultados', 'Flujos de Efectivo']
+    report_elements = ['Balance General', 'Estado de Resultados', 'Estado de Flujos de Efectivo']
     report = st.selectbox(label='Selección de Reporte Financiero', options=report_elements)
 
   # Evaluar el tipo de reporte seleccionado
@@ -56,7 +56,7 @@ if analysis=='Estados Financieros':
     except:
       data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
       
-  elif report=='Flujos de Efectivo':
+  elif report=='Estado de Flujos de Efectivo':
     try:
       data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
     except:
