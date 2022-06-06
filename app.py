@@ -1,5 +1,6 @@
 # Importar librerías de trabajo
 # from st_aggrid import GridOptionsBuilder, AgGrid, GridUpdateMode, DataReturnMode
+import numpy_financial as npf
 import streamlit as st
 import numpy as np
 import pandas as pd
