@@ -247,7 +247,7 @@ elif analysis=='Análisis de Inversiones':
     licensee = st.selectbox(label='Selección de Concesionarios', options=licensee_elements)
 
     # Definir el campo para ingresa la tasa de descuento
-    dr = st.number_input('Ingresar la tasa de descuento', step=0.001, value=7.1, format="%f")/100
+    dr = st.number_input('Ingresar la tasa de descuento', step=0.1, value=7.1, format="%f")/100
 
     # Importar información de las inversiones de los concesionarios
     investments = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Investments.csv', encoding='latin', na_values='-').fillna(0)
