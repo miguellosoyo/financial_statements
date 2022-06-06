@@ -306,7 +306,7 @@ elif analysis=='Análisis de Inversiones':
   # Filtrar información por concesionario y seleccionar las variables de interés
   df_inv = investments[investments['Concesionario']==licensee][['Año', inv_type]].reset_index(drop=True).copy().set_index('Año')
   df_cf = cash_flows[cash_flows['Concesionario']==licensee][['Año', cf_type, 'Amortización y Depreciación', 'Pago Concesión']].reset_index(drop=True).copy().set_index('Año')
-  wacc_value = wacc[(wacc['Concesionario']==licensee) & (wacc['Año']==year)]['WACC'].values[0]
+  # wacc_value = wacc[(wacc['Concesionario']==licensee) & (wacc['Año']==year)]['WACC'].values[0]
   
   # Concatenar información
   df = pd.concat([df_inv, df_cf], axis=1).fillna(0)
