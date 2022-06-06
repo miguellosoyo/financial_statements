@@ -60,7 +60,7 @@ with st.sidebar:
   # Definir un menú de selección para los concesionarios
   st.subheader('Tipos de Análisis')
   analysis_elements = ('Estados Financieros', 'Análisis de Inversiones',)
-  analysis = st.selectbox('Selección de Análisis', options=analysis_elements)
+  analysis = st.radio('Selección de Análisis', options=analysis_elements)
 
   # Definir un menú de selección para los diferentes reportes financieros
   st.subheader('Reportes Financieros')
