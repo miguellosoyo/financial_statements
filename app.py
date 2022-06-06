@@ -279,7 +279,7 @@ elif analysis=='Análisis de Inversiones':
     years = [investments['Año'].min(), investments['Año'].max()]
     range_years = st.slider('Seleccione el rango de años a analizar', int(years[0]), int(years[-1]), (int(years[0]), int(years[-1])))
     years = [str(x) for x in range(range_years[0],range_years[-1]+1)]
-    
+        
     # Definir un menú de selección para los concesionarios
     st.subheader('Concesionarios')
     licensee_elements = sorted(['KCSM', 'Ferrosur', 'Ferromex'])
@@ -308,7 +308,11 @@ elif analysis=='Análisis de Inversiones':
 
   # Importar información de los flujos de efectivo de los concesionarios
   cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows.csv', encoding='utf-8', na_values='-').fillna(0)
-    
+   
+  # Filtrar DataFrames por periodo seleccionado
+  investments = investments[investments['Año'].isin(years)]
+  cash_flows = cash_flows[cash_flows['Año'].isin(years)]
+  
   # Filtrar información por concesionario y seleccionar las variables de interés
   df_inv = investments[investments['Concesionario']==licensee.upper()][['Año', inv_type]].reset_index(drop=True).copy().set_index('Año')
   df_cf = cash_flows[cash_flows['Concesionario']==licensee].reset_index(drop=True).copy().set_index('Año')
