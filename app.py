@@ -58,17 +58,23 @@ names = ['César','Angélica', 'Paola', 'Edith']
 usernames = ['cesar_artf','angelica_artf', 'paola_artf', 'edith_artf']
 passwords = ['Sandía99.','Sandía99.', 'Sandía99.', 'Sandía99.']
 
+# Definir un cuadro expansivo
+expander = st.expander('Login')
+
 # Generar el objeto de autenticación
 with st.sidebar:
   
   # Integrar título del área de login
-  st.header('Iniciar Sesión')
+  # st.header('Iniciar Sesión')
+  expander.header('Iniciar Sesión')
 
   # Incorprar el cuadro de ingreso del usuario
-  username = st.text_input('Usuario')
+  # username = st.text_input('Usuario')
+  username = expander.text_input('Usuario')
 
   # Incorprar el cuadro de ingreso de la 
-  password = st.text_input('Contraseña', type='password')
+  # password = st.text_input('Contraseña', type='password')
+  password = expander.text_input('Contraseña', type='password')
 
 # Obtener los datos que ingresará el usuario
 if username=='' and password=='':
