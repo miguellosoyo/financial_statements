@@ -60,7 +60,7 @@ with st.sidebar:
   st.subheader('Tipos de Análisis')
   analysis_elements = sorted(('Estados Financieros', 'Análisis de Inversiones',))
   analysis = st.radio('Selección de Análisis', options=analysis_elements)
-analysis='Análisis de Inversiones'
+
 # Evaluar si es un análisis financiero el que se quiere realizar
 if analysis=='Estados Financieros':
 
