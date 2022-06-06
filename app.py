@@ -398,14 +398,15 @@ elif analysis=='Análisis de Inversiones':
                           </style>
                         """
   # Integrar el valor presente neto (VPN)
-  st.subheader(f'Valor Presente Neto de {licensee}: $ {round(vpn,2)/1000000}')
+  
   
   # Integrar métricas de WACC, TIR, tasa de reinversión (TRI), diferencia entre TIR y WACC, diferencia entre TRI y WACC
-  col1, col2, col3, col4, = st.columns(4)
-  col1.metric('WACC', f'{wacc_value*100}%')
-  col2.metric('TIR', f'{round(irr*100,2)}%')
-  col3.metric('TIR - WACC', f'{round((irr-wacc_value)*100,2)}%')
-  col4.metric('TRI', round(rir,2))
+  col1, col2, col3, col4, col5 = st.columns(5)
+  col1.metric('VPN (miles de millones de pesos)', '$ {round(vpn/1000000,2)}')
+  col2.metric('WACC', f'{wacc_value*100}%')
+  col3.metric('TIR', f'{round(irr*100,2)}%')
+  col4.metric('TIR - WACC', f'{round((irr-wacc_value)*100,2)}%')
+  col5.metric('TRI', round(rir,2))
   
   # Integrar el CSS con Markdown
   st.markdown(hide_table_row_index, unsafe_allow_html=True)
