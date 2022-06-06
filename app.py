@@ -58,12 +58,12 @@ names = ['César','Angélica', 'Paola', 'Edith']
 usernames = ['cesar_artf','angelica_artf', 'paola_artf', 'edith_artf']
 passwords = ['Sandía99.','Sandía99.', 'Sandía99.', 'Sandía99.']
 
-# Definir un cuadro expansivo
-expander = st.expander('Login')
-
 # Generar el objeto de autenticación
 with st.sidebar:
   
+  # Definir un cuadro expansivo
+  expander = st.expander('Login')
+
   # Integrar título del área de login
   # st.header('Iniciar Sesión')
   expander.header('Iniciar Sesión')
