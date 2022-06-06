@@ -327,7 +327,7 @@ if authentication_status:
 
       # Definir el campo para ingresa la tasa de descuento
       dr = st.number_input('Ingresar la Tasa de Descuento',)
-      df = df/100
+      dr = dr/100
       
       # Definir una lista con la selección de inversiones
       inv_type = st.selectbox(label='Seleccione el Tipo de Inversión a Analizar', options=investments.columns[2:].tolist())
