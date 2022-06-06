@@ -1,6 +1,4 @@
 # Importar librerías de trabajo
-# from st_aggrid import GridOptionsBuilder, AgGrid, GridUpdateMode, DataReturnMode
-# import numpy_financial as npf
 import streamlit as st
 import numpy as np
 import pandas as pd
@@ -247,7 +245,7 @@ elif analysis=='Análisis de Inversiones':
     licensee = st.selectbox(label='Selección de Concesionarios', options=licensee_elements)
 
     # Definir el campo para ingresa la tasa de descuento
-    dr = st.number_input('Ingresar la tasa de descuento', step=0.1, value=7.1, format="%f")/100
+    dr = st.number_input('Ingresar la tasa de descuento', step=0.1, value=7.1, format="%g")/100
 
     # Importar información de las inversiones de los concesionarios
     investments = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Investments.csv', encoding='latin', na_values='-').fillna(0)
@@ -288,7 +286,7 @@ elif analysis=='Análisis de Inversiones':
   df['Flujos de Efectivo Descontados'] = dcf
 
   # Calcular la Tasa Interna de Retorno con los FLujos de Efectivo
-  # irr = npf.irr(df['Flujos de Efectivo'].tolist())
+  irr = np.irr(df['Flujos de Efectivo'].tolist())
 
   # Transponer DataFrame para presentar
   df = df[['Pago Concesión', inv_type, 'Ingresos Totales', 'Flujos de Efectivo', 'Flujos de Efectivo Descontados']].T
