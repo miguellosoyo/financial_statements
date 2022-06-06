@@ -239,109 +239,121 @@ if analysis=='Estados Financieros':
 elif analysis=='Análisis de Inversiones':
   
   # Integrar a la barra lateral la selección de concesionarios, campo para poner la tasa de descuento y la lista de variables para inversiones y flujos de efectivo
-  with st.sidebar:
+with st.sidebar:
 
-    # Definir un menú de selección para los concesionarios
-    st.subheader('Concesionarios')
-    licensee_elements = sorted(['KCSM', 'FERROSUR', 'FERROMEX'])
-    licensee = st.selectbox(label='Selección de Concesionarios', options=licensee_elements)
+  # Definir un menú de selección para los concesionarios
+  st.subheader('Concesionarios')
+  licensee_elements = sorted(['KCSM', 'FERROSUR', 'FERROMEX'])
+  licensee = st.selectbox(label='Selección de Concesionarios', options=licensee_elements)
 
-    # Definir el campo para ingresa la tasa de descuento
-    dr = st.number_input('Ingresar la tasa de descuento (en decimales)')
+  # Definir el campo para ingresa la tasa de descuento
+  dr = st.number_input('Ingresar la tasa de descuento (en decimales)')
 
-    # Importar información de las inversiones de los concesionarios
-    investments = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Investments.csv', encoding='latin', na_values='-').fillna(0)
+  # Importar información de las inversiones de los concesionarios
+  investments = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Investments.csv', encoding='latin', na_values='-').fillna(0)
 
-    # Definir una lista con la selección de inversiones
-    inv_type = st.selectbox(label='Seleccione el Tipo de Inversión a Analizar', options=investments.columns[2:].tolist())
+  # Definir una lista con la selección de inversiones
+  inv_type = st.selectbox(label='Seleccione el Tipo de Inversión a Analizar', options=investments.columns[2:].tolist())
 
-    # Definir una lista con la selección de flujos de efectivo
-    cf_type = st.selectbox(label='Seleccione el Tipo de Flujo de Efectivo a Analizar', options=['Ingresos Totales', 'Utilidad de  Operación', 'Utilidad Neta'])
-
-  # Evaluar si la tasa de descuento es menor a 1
-  if dr>1:
-    st.subheader(f'''
-                  La tasa de descuento que ha ingresado es incorrecta. Favor de verificar que sean valores decimales.
-                  ''')
-
-  # Importar información de los flujos de efectivo de los concesionarios
-  cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows.csv', encoding='latin', na_values='-').fillna(0)
-
-  # # Filtrar información por concesionario y seleccionar las variables de interés
-  df_inv = investments[investments['Concesionario']==licensee][['Año', inv_type]].reset_index(drop=True).copy().set_index('Año')
-  df_cf = cash_flows[cash_flows['Concesionario']==licensee][['Año', cf_type, 'Pago Concesión']].reset_index(drop=True).copy().set_index('Año')
-
-  # Concatenar información
-  df = pd.concat([df_inv, df_cf], axis=1).fillna(0)
-
-  # Calcular los flujos de efectivo
-  df['Flujos de Efectivo'] = df['Ingresos Totales'] - df[inv_type] - df['Pago Concesión']
-
-  # Obtener los flujos de efectivo descontados
-  dcf = []
-  for i, x in enumerate(df['Flujos de Efectivo'].values):
-
-    # Descontar los flujos de efectivo y asignarlos
-    dcf.append(x/((1+dr)**i))
-
-  # Integrar los flujos de efectivo descontados al DataFrame
-  df['Flujos de Efectivo Descontados'] = dcf
-
-  # Calcular la Tasa Interna de Retorno con los FLujos de Efectivo
-  # irr = npf.irr(df['Flujos de Efectivo'].tolist())
-
-  # Transponer DataFrame para presentar
-  df = df[['Pago Concesión', inv_type, 'Ingresos Totales', 'Flujos de Efectivo', 'Flujos de Efectivo Descontados']].T
-
-  # Mostrar información financiera
+  # Definir una lista con la selección de flujos de efectivo
+  cf_type = st.selectbox(label='Seleccione el Tipo de Flujo de Efectivo a Analizar', options=['Ingresos Totales', 'Utilidad de  Operación', 'Utilidad Neta'])
+  
+# Evaluar si la tasa de descuento es menor a 1
+if dr>1:
   st.subheader(f'''
-              Flujos de Efectivo de {licensee}
-              ''')
+                La tasa de descuento que ha ingresado es incorrecta. Favor de verificar que sean valores decimales.
+                ''')
 
-  # Aplicar el formato definido en el caso respectivo, y esconder el índice de números consecutivos
-  df = df.style.apply(highlight, axis=None).set_properties(**{'font-size': '10pt', 'font-family': 'monospace', 'border': '', 'width': '110%'}).format(format)
+# Importar información de los flujos de efectivo de los concesionarios
+cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows.csv', encoding='latin', na_values='-').fillna(0)
 
-  # Definir las propiedades de estilo para los encabezados
-  th_props = [
-              ('font-size', '12pt'),
-              ('text-align', 'center'),
-              ('font-weight', 'bold'),
-              ('color', 'white'),
-              ('background-color', '#328f1d')
-              ]
+# # Filtrar información por concesionario y seleccionar las variables de interés
+df_inv = investments[investments['Concesionario']==licensee][['Año', inv_type]].reset_index(drop=True).copy().set_index('Año')
+df_cf = cash_flows[cash_flows['Concesionario']==licensee][['Año', cf_type, 'Pago Concesión']].reset_index(drop=True).copy().set_index('Año')
 
-  # Definir las propiedades de estilo para la información de la tabla
-  td_props = [
-              ('font-size', '8pt'),
-              ('width', '110%'),
-              ]
+# Concatenar información
+df = pd.concat([df_inv, df_cf], axis=1).fillna(0)
 
-  # Integrar los estilos en una variable de estilos
-  styles = [
-            dict(selector='th', props=th_props),
-            dict(selector='td', props=td_props)
+# Calcular los flujos de efectivo
+df['Flujos de Efectivo'] = df['Ingresos Totales'] - df[inv_type] - df['Pago Concesión']
+
+# Obtener los flujos de efectivo descontados
+dr = 0.071
+dcf = []
+for i, x in enumerate(df['Flujos de Efectivo'].values):
+  
+  # Descontar los flujos de efectivo y asignarlos
+  dcf.append(x/((1+dr)**i))
+  
+# Integrar los flujos de efectivo descontados al DataFrame
+df['Flujos de Efectivo Descontados'] = dcf
+
+# Calcular la Tasa Interna de Retorno con los FLujos de Efectivo
+irr = npf.irr(df['Flujos de Efectivo'].tolist())
+
+# Transponer DataFrame para presentar
+df = df[['Pago Concesión', inv_type, 'Ingresos Totales', 'Flujos de Efectivo', 'Flujos de Efectivo Descontados']].T
+df.reset_index(inplace=True)
+
+# Renombrar columna de índice
+df.columns = [str(x) for x in df.columns]
+df.rename(columns={'index':'Concepto'}, inplace=True)
+
+# Mostrar información financiera
+st.subheader(f'''
+            Flujos de Efectivo de {licensee}
+            ''')
+
+# Definir el formato para aplicar en la tabla
+columns = df.columns.tolist()[1:]
+
+# Definir el formato para aplicar en la tabla
+format = {x:"{:,.0f}" for i, x in enumerate(columns)}
+
+# Aplicar el formato definido en el caso respectivo, y esconder el índice de números consecutivos
+df = df.style.apply(highlight, axis=None).set_properties(**{'font-size': '10pt', 'font-family': 'monospace', 'border': '', 'width': '110%'}).format(format)
+
+# Definir las propiedades de estilo para los encabezados
+th_props = [
+            ('font-size', '12pt'),
+            ('text-align', 'center'),
+            ('font-weight', 'bold'),
+            ('color', 'white'),
+            ('background-color', '#328f1d')
             ]
 
-  # Aplicar formatos
-  df.set_table_styles(styles)
+# Definir las propiedades de estilo para la información de la tabla
+td_props = [
+            ('font-size', '8pt'),
+            ('width', '110%'),
+            ]
 
-  # Definir formato CSS para eliminar los índices de la tabla, centrar encabezados, aplicar líneas de separación y cambiar tipografía
-  hide_table_row_index = """
-                          <style>
-                          tbody th {display:none;}
-                          .blank {display:none;}
-                          .col_heading {font-family: monospace; border: 3px solid white; text-align: center !important;}
-                          </style>
-                        """
+# Integrar los estilos en una variable de estilos
+styles = [
+          dict(selector='th', props=th_props),
+          dict(selector='td', props=td_props)
+          ]
 
-  # Integrar el CSS con Markdown
-  st.markdown(hide_table_row_index, unsafe_allow_html=True)
+# Aplicar formatos
+df.set_table_styles(styles)
 
-  # Integrar el DataFrame a la aplicación Web
-  st.table(df)
+# Definir formato CSS para eliminar los índices de la tabla, centrar encabezados, aplicar líneas de separación y cambiar tipografía
+hide_table_row_index = """
+                        <style>
+                        tbody th {display:none;}
+                        .blank {display:none;}
+                        .col_heading {font-family: monospace; border: 3px solid white; text-align: center !important;}
+                        </style>
+                      """
 
-  # Insertar una nota al pie de la tabla
-  st.caption(f'Información financiera de {licensee}.')
+# Integrar el CSS con Markdown
+st.markdown(hide_table_row_index, unsafe_allow_html=True)
+
+# Integrar el DataFrame a la aplicación Web
+st.table(df)
+
+# Insertar una nota al pie de la tabla
+st.caption(f'Información financiera de {licensee}.')
 
 # pd.set_option("max_colwidth", None)
 # Exportar en formato Excel
