@@ -233,9 +233,31 @@ if analysis=='Estados Financieros':
   # Insertar una nota al pie de la tabla
   st.caption(f'Información financiera de {licensee}.')
 
+# Evaluar si se realizará un análisis de las inversiones
 elif analysis=='Análisis de Inversiones':
-  pass
+  
+  # Integrar a la barra lateral la selección de concesionarios y campo para poner la tasa de descuento
+  with st.sidebar:
 
+    # Definir un menú de selección para los concesionarios
+    st.subheader('Concesionarios')
+    licensee_elements = sorted(['KCSM', 'Ferrosur', 'Ferromex'])
+    licensee = st.selectbox(label='Selección de Concesionarios', options=licensee_elements)
+
+    # Definir el campo para ingresa la tasa de descuento
+    dr = st.number_input('Ingresar la tasa de descuento (en decimales)')
+
+  # Evaluar si la tasa de descuento es menor a 1
+  while dr<1:
+    st.subheader(f'''
+                  La tasa de descuento que ha ingresado es incorrecta. Favor de verificar que sean valores decimales.
+                  ''')
+
+  # Importar información de las inversiones de los concesionarios
+  investments = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Investments.csv', encoding='latin', na_values='-').fillna(0)
+
+  # Importar información de los flujos de efectivo de los concesionarios
+  cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows.csv', encoding='latin', na_values='-').fillna(0)
 
 # pd.set_option("max_colwidth", None)
 # Exportar en formato Excel
