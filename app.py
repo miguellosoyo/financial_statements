@@ -296,8 +296,11 @@ elif analysis=='Análisis de Inversiones':
 
   # Importar información de los flujos de efectivo de los concesionarios
   cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows.csv', encoding='latin', na_values='-').fillna(0)
-
-  # # Filtrar información por concesionario y seleccionar las variables de interés
+  
+  # Importar información del WACC
+  
+  
+  # Filtrar información por concesionario y seleccionar las variables de interés
   df_inv = investments[investments['Concesionario']==licensee][['Año', inv_type]].reset_index(drop=True).copy().set_index('Año')
   df_cf = cash_flows[cash_flows['Concesionario']==licensee][['Año', cf_type, 'Amortización y Depreciación', 'Pago Concesión']].reset_index(drop=True).copy().set_index('Año')
 
@@ -327,11 +330,6 @@ elif analysis=='Análisis de Inversiones':
   # Renombrar columna de índice
   df.columns = [str(x) for x in df.columns]
   df.rename(columns={'index':'Concepto'}, inplace=True)
-
-  # Mostrar información financiera
-  st.subheader(f'''
-              Flujos de Efectivo de {licensee}
-              ''')
 
   # Definir el formato para aplicar en la tabla
   columns = df.columns.tolist()[1:]
@@ -375,9 +373,18 @@ elif analysis=='Análisis de Inversiones':
                           </style>
                         """
 
+  # Integrar métricas de WACC, TIR, tasa de reinversión (TRI), diferencia entre TIR y WACC, diferencia entre TRI y WACC
+  col1, col2, col3, col4 = st.columns(4)
+  
+
   # Integrar el CSS con Markdown
   st.markdown(hide_table_row_index, unsafe_allow_html=True)
-
+  
+  # Mostrar información financiera
+  st.subheader(f'''
+              Flujos de Efectivo de {licensee}
+              ''')
+  
   # Integrar el DataFrame a la aplicación Web
   st.table(df)
 
