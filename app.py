@@ -382,11 +382,11 @@ elif analysis=='Análisis de Inversiones':
 
   # Integrar métricas de WACC, TIR, tasa de reinversión (TRI), diferencia entre TIR y WACC, diferencia entre TRI y WACC
   col1, col2, col3, col4 = st.columns(4)
-  col1.metric('WACC', wacc_value)
-  col2.metric('TIR', irr)
-  col3.metric('TRI', rir)
-  col4.metric('TIR - WACC', irr-wacc_value)
-  col4.metric('TRI - WACC', tri-wacc_value)
+  # col1.metric('WACC', wacc_value)
+  # col2.metric('TIR', irr)
+  # col3.metric('TRI', rir)
+  # col4.metric('TIR - WACC', irr-wacc_value)
+  # col4.metric('TRI - WACC', tri-wacc_value)
 
   # Integrar el CSS con Markdown
   st.markdown(hide_table_row_index, unsafe_allow_html=True)
