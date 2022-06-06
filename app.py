@@ -15,12 +15,7 @@ with st.sidebar:
   # Definir un menú de selección para los concesionarios
   st.subheader('Tipos de Análisis')
   analysis_elements = ('Estados Financieros', 'Análisis de Inversiones',)
-  analysis = st.selectbox('Selección de Análisis', options=analysis_elements)
-
-  # Definir un menú de selección para los diferentes reportes financieros
-  st.subheader('Reportes Financieros')
-  report_elements = ['Balance General', 'Estado de Resultados', 'Flujos de Efectivo']
-  report = st.selectbox(label='Selección de Reporte Financiero', options=report_elements)
+  analysis = st.radio('Selección de Análisis', options=analysis_elements)
 
 if analysis=='Estados Financieros':
   # Definir una función que ilumine una fila sí y otra no de un color en específico
