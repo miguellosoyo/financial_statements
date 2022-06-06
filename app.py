@@ -1,6 +1,3 @@
-# Escribir aplicación Streamlit
-%%writefile app.py
-
 # Importar librerías de trabajo
 # from st_aggrid import GridOptionsBuilder, AgGrid, GridUpdateMode, DataReturnMode
 import streamlit as st
