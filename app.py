@@ -10,6 +10,19 @@ import os
 pd.options.display.max_rows = None
 pd.options.display.max_columns = None
 
+# Definir una función que ilumine una fila sí y otra no de un color en específico
+def highlight(x):
+
+  # Definir los colores para las filas impares y pares
+  c1 = 'background-color: #dedede'
+  c2 = 'background-color: white'
+
+  # Definir un DataFrame con el mapeo de los colores
+  df1 = pd.DataFrame('', index=x.index, columns=x.columns)
+  df1.loc[df1.index%2!=0, :] = c1
+  df1.loc[df1.index%2==0, :] = c2
+  return df1 
+
 # Integrar a la barra lateral la selección de tipo de análisis
 with st.sidebar:
 
@@ -19,19 +32,7 @@ with st.sidebar:
   analysis = st.radio('Selección de Análisis', options=analysis_elements)
 
 if analysis=='Estados Financieros':
-  # Definir una función que ilumine una fila sí y otra no de un color en específico
-  def highlight(x):
-
-    # Definir los colores para las filas impares y pares
-    c1 = 'background-color: #dedede'
-    c2 = 'background-color: white'
-
-    # Definir un DataFrame con el mapeo de los colores
-    df1 = pd.DataFrame('', index=x.index, columns=x.columns)
-    df1.loc[df1.index%2!=0, :] = c1
-    df1.loc[df1.index%2==0, :] = c2
-    return df1  
-
+  
   # Integrar a la barra lateral la selección de concesionarios y tipo de reporte
   with st.sidebar:
 
