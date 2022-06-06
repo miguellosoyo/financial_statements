@@ -1,4 +1,5 @@
 # Importar librerías de trabajo
+# from st_aggrid import GridOptionsBuilder, AgGrid, GridUpdateMode, DataReturnMode
 import streamlit as st
 import numpy as np
 import pandas as pd
@@ -19,18 +20,56 @@ def highlight(x):
   df1 = pd.DataFrame('', index=x.index, columns=x.columns)
   df1.loc[df1.index%2!=0, :] = c1
   df1.loc[df1.index%2==0, :] = c2
-  return df1 
+  return df1  
+
+# Crear una función para calcular la TIR
+def irr(values, guess=0.1, tol=1e-12, maxiter=100):
+    
+  # Convertir los valores integrados a un vector de una dimensión
+  values = np.atleast_1d(values)
+  
+  # Evaluar que sea un vector unidimensional
+  if values.ndim != 1:
+      raise ValueError("Cashflows must be a rank-1 array")
+
+  # Evaluar que los valores sean mayores a 0
+  same_sign = np.all(values > 0) if values[0] > 0 else np.all(values < 0)
+  if same_sign:
+      return np.nan
+
+  # Crear una función polinómica con los valores
+  npv_ = np.polynomial.Polynomial(values)
+  
+  # Aplicar su derivada
+  d_npv = npv_.deriv()
+  x = 1 / (1 + guess)
+
+  # Iterar sobre las derivadas hasta obtener la TIR
+  for _ in range(maxiter):
+      x_new = x - (npv_(x) / d_npv(x))
+      if abs(x_new - x) < tol:
+          return 1 / x_new - 1
+      x = x_new
+
+  # Devolver valor nulo en caso de no hallar la TIR
+  return np.nan
 
 # Integrar a la barra lateral la selección de tipo de análisis
 with st.sidebar:
 
   # Definir un menú de selección para los concesionarios
   st.subheader('Tipos de Análisis')
-  analysis_elements = sorted(('Estados Financieros', 'Análisis de Inversiones',))
-  analysis = st.radio('Selección de Análisis', options=analysis_elements)
+  analysis_elements = ('Estados Financieros', 'Análisis de Inversiones',)
+  analysis = st.selectbox('Selección de Análisis', options=analysis_elements)
 
+  # Definir un menú de selección para los diferentes reportes financieros
+  st.subheader('Reportes Financieros')
+  report_elements = ['Balance General', 'Estado de Resultados', 'Flujos de Efectivo']
+  report = st.selectbox(label='Selección de Reporte Financiero', options=report_elements)
+
+# Evaluar si es un análisis financiero el que se quiere realizar
 if analysis=='Estados Financieros':
-  
+
   # Integrar a la barra lateral la selección de concesionarios y tipo de reporte
   with st.sidebar:
 
@@ -41,26 +80,18 @@ if analysis=='Estados Financieros':
 
     # Definir un menú de selección para los diferentes reportes financieros
     st.subheader('Reportes Financieros')
-    report_elements = ['Balance General', 'Estado de Resultados', 'Estado de Flujos de Efectivo']
+    report_elements = ['Balance General', 'Estado de Resultados', 'Flujos de Efectivo']
     report = st.selectbox(label='Selección de Reporte Financiero', options=report_elements)
 
   # Evaluar el tipo de reporte seleccionado
   if report=='Balance General':
-    try:
-      data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ESF.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
-    except:
-      data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ESF.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
+    data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ESF.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
+    
   elif report=='Estado de Resultados':
-    try:
-      data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
-    except:
-      data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
-      
-  elif report=='Estado de Flujos de Efectivo':
-    try:
-      data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
-    except:
-      data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
+    data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
+
+  elif report=='Flujos de Efectivo':
+    data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
     
   # Obtener los periodos de estudio
   years = data.columns.tolist()
@@ -123,7 +154,7 @@ if analysis=='Estados Financieros':
       
     # Mostrar información financiera
     st.subheader(f'''
-                Análisis Vertical y Horizontal del {report} de {licensee}
+                Análisis Vertical y Horizontal del Estado de Resultados de {licensee}
                 ''')
       
   # Evaluar si se requiere calcular el análisis vertical
@@ -148,7 +179,7 @@ if analysis=='Estados Financieros':
       
     # Mostrar información financiera
     st.subheader(f'''
-                Análisis Vertical del {report} de {licensee}
+                Análisis Vertical del Estado de Resultados de {licensee}
                 ''')
     
   # Seleccionar que se efectue el análisis horizontal
@@ -172,7 +203,7 @@ if analysis=='Estados Financieros':
       
     # Mostrar información financiera
     st.subheader(f'''
-                Análisis Vertical del {report} de {licensee}
+                Análisis Vertical del Estado de Resultados de {licensee}
                 ''')
 
   # En caso de no seleccionar ninguna opción, mostrar la información
@@ -233,7 +264,7 @@ if analysis=='Estados Financieros':
   # Insertar una nota al pie de la tabla
   st.caption(f'Información financiera de {licensee}.')
 
-# Evaluar si se realizará un análisis de las inversiones
+# Evaluar si es un análisis de inversiones
 elif analysis=='Análisis de Inversiones':
   
   # Integrar a la barra lateral la selección de concesionarios, campo para poner la tasa de descuento y la lista de variables para inversiones y flujos de efectivo
@@ -255,7 +286,7 @@ elif analysis=='Análisis de Inversiones':
 
     # Definir una lista con la selección de flujos de efectivo
     cf_type = st.selectbox(label='Seleccione el Tipo de Flujo de Efectivo a Analizar', options=['Ingresos Totales', 'Utilidad de  Operación', 'Utilidad Neta'])
-
+    
   # Evaluar si la tasa de descuento es menor a 1
   if dr>1:
     st.subheader(f'''
@@ -279,15 +310,15 @@ elif analysis=='Análisis de Inversiones':
   dr = 0.071
   dcf = []
   for i, x in enumerate(df['Flujos de Efectivo'].values):
-
+    
     # Descontar los flujos de efectivo y asignarlos
     dcf.append(x/((1+dr)**i))
-
+    
   # Integrar los flujos de efectivo descontados al DataFrame
   df['Flujos de Efectivo Descontados'] = dcf
 
   # Calcular la Tasa Interna de Retorno con los FLujos de Efectivo
-  irr = np.irr(df['Flujos de Efectivo'].tolist())
+  irr = irr(df['Flujos de Efectivo'].tolist())
 
   # Transponer DataFrame para presentar
   df = df[['Pago Concesión', inv_type, cf_type, 'Flujos de Efectivo', 'Flujos de Efectivo Descontados']].T
