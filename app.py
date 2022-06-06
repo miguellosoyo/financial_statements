@@ -58,6 +58,10 @@ names = ['César','Angélica', 'Paola', 'Edith']
 usernames = ['cesar_artf','angelica_artf', 'paola_artf', 'edith_artf']
 passwords = ['Sandía99.','Sandía99.', 'Sandía99.', 'Sandía99.']
 
+# Definir variables vacías para usuario y contraseña
+username = '' 
+password = ''
+
 # Generar el objeto de autenticación
 with st.sidebar:
   
@@ -65,15 +69,12 @@ with st.sidebar:
   expander = st.expander('Login')
 
   # Integrar título del área de login
-  # st.header('Iniciar Sesión')
   expander.header('Iniciar Sesión')
 
   # Incorprar el cuadro de ingreso del usuario
-  # username = st.text_input('Usuario')
   username = expander.text_input('Usuario')
 
   # Incorprar el cuadro de ingreso de la 
-  # password = st.text_input('Contraseña', type='password')
   password = expander.text_input('Contraseña', type='password')
 
 # Obtener los datos que ingresará el usuario
@@ -87,11 +88,14 @@ if authentication_status:
   
   # Integrar a la barra lateral la selección de tipo de análisis
   with st.sidebar:
-
+    
+    # Definir un cuadro expansivo
+    expander_analysis = st.expander('Tipos de Análisis')
+  
     # Definir un menú de selección para los concesionarios
-    st.subheader('Tipos de Análisis')
+    expander_analysis.subheader('Tipos de Análisis')
     analysis_elements = sorted(('Estados Financieros', 'Análisis de Inversiones',))
-    analysis = st.radio('Selección de Análisis', options=analysis_elements)
+    analysis = expander_analysis.radio('Selección de Análisis', options=analysis_elements)
 
   # Evaluar si es un análisis financiero el que se quiere realizar
   if analysis=='Estados Financieros':
