@@ -648,7 +648,7 @@ if authentication_status:
                          "name": f"{cf_type}",
                          "position": "left",
                          "alignTicks": True,
-                         "axisLine": {
+                         "axisLine":{
                          "show": True,
                          },
                          }
@@ -660,7 +660,6 @@ if authentication_status:
                           },
                          {"name": f"{cf_type}",
                           "type": "line",
-                          "yAxisIndex": 2,
                           "data": cash_flows[cf_type].values.tolist()
                           }
                          ]
