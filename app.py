@@ -154,19 +154,18 @@ if authentication_status:
     expander_deflact.header('Variables para Deflactar')
 
     # Colocar cuadros de selección para las tareas de Saldos Corrientes o Deflactados
-    current = expander_deflact.checkbox('Saldos Corrientes')
-    constant = expander_deflact.checkbox('Saldos Constantes')
-    
+    ammounts = expander_deflact.radio('Tipo de Saldos', options=['Saldos Corrientes', 'Saldos Constantes'])
+        
     # Evaluar si los saldos serán corrientes
-    if current:
+    if ammounts=='Saldos Corrientes':
       
       # Importar la información de los deflactores
       deflactors = deflactor_serie(2020)
 
-    elif constant:
+    elif ammounts=='Saldos Constantes':
     
       # Incorprar el cuadro de ingreso del usuario
-      year_deflact = expander_deflact.selectbox(range(1997,2022))
+      year_deflact = expander_deflact.selectbox('Seleccione el Año Base', options=range(1997,2022))
 
       # Importar la información de los deflactores
       deflactors = deflactor_serie(year_deflact)    
