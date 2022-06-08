@@ -423,8 +423,7 @@ if authentication_status:
       years = list(range(range_years[0],range_years[-1]+1))
 
       # Definir el campo para ingresa la tasa de descuento
-      dr = st.number_input('Ingresar la Tasa de Descuento', min_value=0, max_value=100, value=7.32)
-      dr = dr/100
+      dr = st.number_input('Ingresar la Tasa de Descuento', min_value=0., max_value=100., value=7.32)/100
       
       # Definir una lista con la selección de inversiones
       inv_type = st.selectbox(label='Seleccione el Tipo de Inversión a Analizar', options=investments.columns[2:].tolist())
