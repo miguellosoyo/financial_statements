@@ -654,11 +654,11 @@ if authentication_status:
                "series":[
                          {"name": f'{inv_type}',
                           "type": "bar",
-                          "data": investments[inv_type].round(2).values.tolist()
+                          "data": df_inv[inv_type].round(2).values.tolist()
                           },
                          {"name": f"{cf_type}",
                           "type": "line",
-                          "data": cash_flows[cf_type].round(2).values.tolist()
+                          "data": df_cf[cf_type].round(2).values.tolist()
                           }
                          ]
                }
