@@ -586,7 +586,7 @@ if True:
     st_echarts(options=options, height="400px")
     
     # Integrar un título y subtitulo para el gráfico
-    st.subheader(f"Elementos de Inversión del Concesionario",)
+    st.subheader(f"Evolución de los Distintos Conceptos de Inversión del Concesionario",)
     st.text(f"Información Financiera de {licensee}")
     
     # Definir las especificaciones de una gráfica de radar con barras
@@ -610,10 +610,6 @@ if True:
     
     # Integrar gráfica de radar
     st_echarts(options=options, height="400px")
-
-    # Integrar un título y subtitulo para el gráfico
-    st.subheader(f"Evolución de los Distintos Conceptos de Inversión del Concesionario",)
-    st.text(f"Información Financiera de {licensee}")
     
 # Evaluar si son incorrectos los datos de ingreso
 elif authentication_status==False:
