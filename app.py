@@ -655,7 +655,7 @@ if authentication_status:
                          "axisLine": {
                          "show": True,
                          "lineStyle": {
-                             color: colors[2]
+                             "color": colors[1]
                              }
                              },
                          }
