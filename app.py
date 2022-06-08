@@ -572,7 +572,9 @@ if authentication_status:
             "subtext": f"Información Financiera de {licensee}",
             },
             "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}},
-            "legend": {"data": df.data['Concepto'].tolist(), "type": "scroll", "orient": "vertical", "right": 25, "top": 30},
+            "legend": {"data": df.data['Concepto'].tolist(), "type": "scroll", "orient": "vertical", "align": "left", 
+                       "top": "7%", "right": "1%", "left": "80%", "width": "27%", "itemGap": 4, "itemHeight": 7,
+                       "itemWidth": 15, "padding": 1, "backgroundColor": 'rgba(0, 0, 0, 0.1)'},            
             "grid": {"left": "5%", "right": "15%", "bottom": "5%", "containLabel": True},
             "xAxis": {"type": "value", "name": "Montos", "nameLocation": "center"},
             "yAxis": {
