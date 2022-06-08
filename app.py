@@ -423,7 +423,7 @@ if authentication_status:
       years = list(range(range_years[0],range_years[-1]+1))
 
       # Definir el campo para ingresa la tasa de descuento
-      dr = st.number_input('Ingresar la Tasa de Descuento',)
+      dr = st.number_input('Ingresar la Tasa de Descuento', min_value=0, max_value=100, value=7.32)
       dr = dr/100
       
       # Definir una lista con la selección de inversiones
@@ -437,13 +437,7 @@ if authentication_status:
       
       # Integrar una lista de los años disponibles del WACC
       year = st.selectbox(label='Seleccione el Año del que Desea el WACC', options=sorted(wacc['Año'].unique().tolist(), reverse=True)[1:])
-      
-    # Evaluar si la tasa de descuento es menor a 1
-    if dr>1:
-      st.subheader(f'''
-                    La tasa de descuento que ha ingresado es incorrecta. Favor de verificar que sean valores decimales.
-                    ''')
-      
+        
     # Filtrar DataFrames por periodo seleccionado
     investments = investments[investments['Año'].isin(years)]
     cash_flows = cash_flows[cash_flows['Año'].isin(years)]
