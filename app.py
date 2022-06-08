@@ -625,7 +625,7 @@ if authentication_status:
     data_echart = echart_data[['Año', 'variable', 'value']].values
 
     # Crear un gráfico de dispersión de un solo eje
-    option = {
+    options = {
         "tooltip": {"position": "top"},
         "title": [
                   {"textBaseline": "middle", "top": f"{(idx + 0.5) * 100 / 7}%", "text": day} for idx, day in enumerate(years_echart)
@@ -661,7 +661,7 @@ if authentication_status:
       dataItem = list(dataItem)
 
       # Adjuntar registros a las opciones de la gráfica
-      option["series"][dataItem[0]]["data"].append([dataItem[1], dataItem[2]])
+      options["series"][dataItem[0]]["data"].append([dataItem[1], dataItem[2]])
     
     # Integrar la gráfica
     st_echarts(options=option, height="600px")
