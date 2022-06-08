@@ -643,10 +643,7 @@ if authentication_status:
                          "alignTicks": True,
                          "axisLine":{
                              "show": True,
-                             "lineStyle": {
-                                 "color": colors[0]
-                                 }
-                                 },
+                         },
                          },
                         {"type": "value",
                          "name": f"{cf_type}",
@@ -654,10 +651,7 @@ if authentication_status:
                          "alignTicks": True,
                          "axisLine": {
                          "show": True,
-                         "lineStyle": {
-                             "color": colors[1]
-                             }
-                             },
+                         },
                          }
                         ],
                "series":[
