@@ -434,7 +434,7 @@ if authentication_status:
       wacc = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/WACC.csv', encoding='utf-8', na_values='-').fillna(0)
       
       # Integrar una lista de los años disponibles del WACC
-      year = st.selectbox(label='Seleccione el Año del que Desea el WACC', options=sorted(wacc['Año'].unique().tolist()))
+      year = st.selectbox(label='Seleccione el Año del que Desea el WACC', options=sorted(wacc['Año'].unique().tolist(), reversed=True))
       
     # Evaluar si la tasa de descuento es menor a 1
     if dr>1:
