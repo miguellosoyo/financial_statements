@@ -660,8 +660,11 @@ if authentication_status:
       # Convertir en lista el registro extraído
       dataItem = list(dataItem)
 
+      # Identificar la posición del dato coincidente
+      position = np.where(years_echart==dataItem[0])[0][0]
+
       # Adjuntar registros a las opciones de la gráfica
-      options["series"][dataItem[0]]["data"].append([dataItem[1], dataItem[2]])
+      options["series"][position]["data"].append([dataItem[1], dataItem[2]])
     
     # Integrar la gráfica
     st_echarts(options=option, height="600px")
