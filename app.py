@@ -599,12 +599,12 @@ if authentication_status:
                            "coordinateSystem": "polar",
                            "stack": "a",
                            "emphasis": {"focus": "series"},
-                           "data": investments[x].round(2).values[0][1:].tolist(),
-                           } for x in [i for i in investments.columns() if 'Anual' in i]
+                           "data": investments[x].round(2).values.tolist(),
+                           } for x in [i for i in investments.columns if 'Anual' in i]
                           ],
                "legend": {
                    "show": "true",
-                   "data": [i for i in investments.columns() if 'Anual' in i]
+                   "data": [i for i in investments.columns if 'Anual' in i]
                    },
                }
     
