@@ -564,6 +564,61 @@ if authentication_status:
 
     # Insertar una nota al pie de la tabla
     st.caption(f'Información financiera de {licensee}.')
+    
+    options = {
+        "title": {
+            "text": "阶梯瀑布图",
+            "subtext": "From ExcelHome",
+            "sublink": "http://e.weibo.com/1341556070/Aj1J2x5a5",
+        },
+        "tooltip": {
+            "trigger": "axis",
+            "axisPointer": {"type": "shadow"},
+            "formatter": JsCode(
+                "function(params){var tar;if(params[1].value!=='-'){tar=params[1]}else{tar=params[0]}return tar.name+'<br/>'+tar.seriesName+' : '+tar.value}"
+            ).js_code,
+        },
+        "legend": {"data": ["支出", "收入"]},
+        "grid": {"left": "3%", "right": "4%", "bottom": "3%", "containLabel": True},
+        "xAxis": {
+            "type": "category",
+            "splitLine": {"show": False},
+            "data": [f"11月 {i} 日" for i in range(1, 12)],
+        },
+        "yAxis": {"type": "value"},
+        "series": [
+            {
+                "name": "辅助",
+                "type": "bar",
+                "stack": "总量",
+                "itemStyle": {
+                    "barBorderColor": "rgba(0,0,0,0)",
+                    "color": "rgba(0,0,0,0)",
+                },
+                "emphasis": {
+                    "itemStyle": {
+                        "barBorderColor": "rgba(0,0,0,0)",
+                        "color": "rgba(0,0,0,0)",
+                    }
+                },
+                "data": [0, 900, 1245, 1530, 1376, 1376, 1511, 1689, 1856, 1495, 1292],
+            },
+            {
+                "name": "收入",
+                "type": "bar",
+                "stack": "总量",
+                "label": {"show": True, "position": "top"},
+                "data": [900, 345, 393, "-", "-", 135, 178, 286, "-", "-", "-"],
+            },
+            {
+                "name": "支出",
+                "type": "bar",
+                "stack": "总量",
+                "label": {"show": True, "position": "bottom"},
+                "data": ["-", "-", "-", 108, 154, "-", "-", "-", 119, 361, 203],
+            },
+        ],
+    }
 
 elif authentication_status==False:
   st.error('Usuario/Contraseña son incorrectos')
