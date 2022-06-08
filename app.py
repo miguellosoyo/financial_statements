@@ -618,8 +618,7 @@ if authentication_status:
     colors = ['#C7A479', '#1E5847']
     
     # Definir las especificaciones de un gráfico de barras y línea
-    options = {"color": colors,
-               "tooltip":{
+    options = {"tooltip":{
                    "trigger": "axis", "axisPointer": {"type": "shadow"}
                    },
                "grid":{
@@ -643,7 +642,10 @@ if authentication_status:
                          "alignTicks": True,
                          "axisLine":{
                              "show": True,
-                         },
+                             "lineStyle": {
+                                 "color": colors[0]
+                                 }
+                                 },
                          },
                         {"type": "value",
                          "name": f"{cf_type}",
@@ -651,7 +653,10 @@ if authentication_status:
                          "alignTicks": True,
                          "axisLine": {
                          "show": True,
-                         },
+                         "lineStyle": {
+                             color: colors[2]
+                             }
+                             },
                          }
                         ],
                "series":[
