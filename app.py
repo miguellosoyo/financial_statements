@@ -647,9 +647,6 @@ if authentication_status:
                              "coordinateSystem": "singleAxis",
                              "type": "scatter",
                              "data": [],
-                             "symbolSize": JsCode(
-                                 "function(dataItem){return dataItem[1]*4}"
-                                 ).js_code,
                           } for idx, _ in enumerate(years_echart)
                           ],
               }
