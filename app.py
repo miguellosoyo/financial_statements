@@ -604,7 +604,7 @@ if authentication_status:
                           ],
                "legend": {
                    "show": "true",
-                   "data": [i for i in investments.columns if 'Anual' in i]
+                   "data": [i for i in investments.columns if 'Anual' in i],
                    "orient": "horizontal", 
                    "x": "right", 
                    "y": "top",
