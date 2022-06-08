@@ -566,26 +566,30 @@ if authentication_status:
     st.caption(f'Información financiera de {licensee}.')
     
     options = {
-        "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}},
-        "legend": {
-            "data": df.data['Concepto'].tolist()
-            },
-            "grid": {"left": "3%", "right": "4%", "bottom": "3%", "containLabel": True},
-            "xAxis": {"type": "value"},
-            "yAxis": {
-                "type": "category",
-                "data": sorted(df.data.columns.tolist()[1:], reverse=True),
-            },
-            "series": [{"name": f"{x}",
-                        "type": "bar",
-                        "stack": "total",
-                        # "label": {"show": True},
-                        "emphasis": {"focus": "series"},
-                        "data": df.data.loc[df.data['Concepto']==x,:].values[0][1:].tolist(),
-                        } for x in df.data['Concepto'].tolist()
-                        ],
-            }
-    st_echarts(options=options, height="500px")
+          "title": {
+              "text": f"Componentes del Flujo de Efectivo",
+              "subtext": f"Información Financiera de {licensee}",
+              }
+          "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}},
+          "legend": {
+              "data": df.data['Concepto'].tolist()
+              },
+              "grid": {"left": "3%", "right": "4%", "bottom": "3%", "containLabel": True},
+              "xAxis": {"type": "value"},
+              "yAxis": {
+                  "type": "category",
+                  "data": df.data.columns.tolist()[1:],
+              },
+              "series": [{"name": f"{x}",
+                          "type": "bar",
+                          "stack": "total",
+                          "label": {"show": True},
+                          "emphasis": {"focus": "series"},
+                          "data": df.data.loc[df.data['Concepto']==x,:].values[0][1:].tolist(),
+                          } for x in df.data['Concepto'].tolist()
+                          ],
+              }
+      st_echarts(options=options, height="500px")
 
 elif authentication_status==False:
   st.error('Usuario/Contraseña son incorrectos')
