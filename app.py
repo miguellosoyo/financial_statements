@@ -593,6 +593,7 @@ if True:
     options = {"angleAxis": {"type": "category",
                              "data": investments['Año'].tolist(),
                              },
+               "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}},
                "radiusAxis": {},
                "polar": {},
                "series": [{"name": f"{x}",
