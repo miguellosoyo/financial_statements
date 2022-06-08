@@ -597,14 +597,14 @@ if authentication_status:
                "series": [{"name": f"{x}",
                            "type": "bar",
                            "coordinateSystem": "polar",
-                           "stack": "a"
+                           "stack": "a",
                            "emphasis": {"focus": "series"},
                            "data": investments[x].round(2).values[0][1:].tolist(),
-                           } for x in [for i in investments.columns() if 'Anual' in i]
+                           } for x in [i for i in investments.columns() if 'Anual' in i]
                           ],
                "legend": {
                    "show": "true",
-                   "data": [for i in investments.columns() if 'Anual' in i]
+                   "data": [i for i in investments.columns() if 'Anual' in i]
                    },
                }
     
