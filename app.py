@@ -574,12 +574,12 @@ if authentication_status:
             "xAxis": {"type": "value"},
             "yAxis": {
                 "type": "category",
-                "data": df.data.columns.tolist()[1:],
+                "data": sorted(df.data.columns.tolist()[1:], reverse=True),
             },
             "series": [{"name": f"{x}",
                         "type": "bar",
                         "stack": "total",
-                        "label": {"show": True},
+                        # "label": {"show": True},
                         "emphasis": {"focus": "series"},
                         "data": df.data.loc[df.data['Concepto']==x,:].values[0][1:].tolist(),
                         } for x in df.data['Concepto'].tolist()
