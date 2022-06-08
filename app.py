@@ -572,7 +572,7 @@ if authentication_status:
             "subtext": f"Información Financiera de {licensee}",
             },
             "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}},
-            "legend": {"data": df.data['Concepto'].tolist(), "orient": "horizontal", "y": "bottom"},
+            "legend": {"data": df.data['Concepto'].tolist(), "orient": "vertical", "right": 10, "top": "center"},
             "grid": {"left": "3%", "right": "4%", "bottom": "3%", "containLabel": True},
             "xAxis": {"type": "value"},
             "yAxis": {
