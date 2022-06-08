@@ -566,8 +566,8 @@ if authentication_status:
     st.caption(f'Información financiera de {licensee}.')
     
     # Integrar un título y subtitulo para el gráfico
-    st.header(f"Componentes del Flujo de Efectivo",)
-    st.subheader(f"Información Financiera de {licensee}")
+    st.subheader(f"Componentes del Flujo de Efectivo",)
+    st.text(f"Información Financiera de {licensee}")
     
     # Definir las especificaciones de una gráfica de barras apiladas 
     options = {
