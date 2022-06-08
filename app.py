@@ -572,20 +572,21 @@ if authentication_status:
             "subtext": f"Información Financiera de {licensee}",
             },
             "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}},
-                "grid": {"left": "3%", "right": "4%", "bottom": "3%", "containLabel": True},
-                "xAxis": {"type": "value"},
-                "yAxis": {
-                    "type": "category",
-                    "data": df.data.columns.tolist()[1:],
-                    },
-                "series": [{"name": f"{x}",
-                            "type": "bar",
-                            "stack": "total",
-                            "emphasis": {"focus": "series"},
-                            "data": df.data.loc[df.data['Concepto']==x,:].values[0][1:].tolist(),
-                            } for x in df.data['Concepto'].tolist()
-                            ],
-                }
+            "legend": {},
+            "grid": {"left": "3%", "right": "4%", "bottom": "3%", "containLabel": True},
+            "xAxis": {"type": "value"},
+            "yAxis": {
+                "type": "category",
+                "data": df.data.columns.tolist()[1:],
+                },
+            "series": [{"name": f"{x}",
+                        "type": "bar",
+                        "stack": "total",
+                        "emphasis": {"focus": "series"},
+                        "data": df.data.loc[df.data['Concepto']==x,:].values[0][1:].tolist(),
+                        } for x in df.data['Concepto'].tolist()
+                        ],
+            }
     
     # Integrar gráfica de barras
     st_echarts(options=options, height="500px")
