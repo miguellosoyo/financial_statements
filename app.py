@@ -593,7 +593,7 @@ if authentication_status:
             }
     
     # Integrar gráfica de barras
-    st_echarts(options=options, height="400px", width="300px")
+    st_echarts(options=options, height="400px")
     
 # Evaluar si son incorrectos los datos de ingreso
 elif authentication_status==False:
