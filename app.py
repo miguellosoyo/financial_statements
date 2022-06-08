@@ -585,10 +585,10 @@ if authentication_status:
     st_echarts(options=options, height="400px")
     
     # Integrar un título y subtitulo para el gráfico
-    st.subheader(f"Evolución de los Distintos Conceptos de Inversión del Concesionario",)
+    st.subheader(f"Evolución de los Conceptos de Inversión",)
     st.text(f"Información Financiera de {licensee}")
     
-    # Definir las especificaciones de una gráfica de radar con barras
+    # Definir las especificaciones de un gráfico de área
     options = {"xAxis": {"type": "category",
                              "data": investments['Año'].tolist(),
                              },
@@ -607,9 +607,75 @@ if authentication_status:
                    },
                }
     
-    # Integrar gráfica de radar
+    # Integrar gráfica de área
     st_echarts(options=options, height="400px")
     
+    # Integrar un título y subtitulo para el gráfico
+    st.subheader(f"Contraste Factor de Ingreso e Inversión",)
+    st.text(f"Información Financiera de {licensee}")
+
+    # Definir los colores a asignar a las barras y línea, respectivamente
+    colors = ['#C7A479', '#1E5847']
+    
+    # Definir las especificaciones de un gráfico de barras y línea
+    options = {"color": colors,
+               "tooltip":{
+                   "trigger": "axis", "axisPointer": {"type": "shadow"}
+                   },
+               "grid":{
+                   "right": "20%",
+                   },
+               "legend":{
+                   "data": [inv_type, cf_type],
+                   },
+               "xAxis":[
+                        {"type": "category",
+                         "axisTick":{
+                             "alignWithLabel":True,
+                             },
+                         "data": investments['Año'].tolist(),
+                         },
+                        ],
+               "yAxis":[
+                        {"type": "value",
+                         "name": f"{inv_type}",
+                         "position": "right",
+                         "alignTicks": True,
+                         "axisLine":{
+                             "show": True,
+                             "lineStyle": {
+                                 "color": colors[0]
+                                 }
+                                 },
+                         },
+                        {"type": "value",
+                         "name": f"{cf_type}",
+                         "position": "left",
+                         "alignTicks": True,
+                         "axisLine": {
+                         "show": True,
+                         "lineStyle": {
+                             color: colors[2]
+                             }
+                             },
+                         }
+                        ],
+               "series":[
+                         {"name": f'{inv_type}',
+                          "type": "bar",
+                          "data": investments[inv_type].values.tolist()
+                          },
+                         {"name": f"{cf_type}",
+                          "type": "line",
+                          "yAxisIndex": 2,
+                          "data": cash_flows[cf_type].values.tolist()
+                          }
+                         ]
+               }
+    
+    # Integrar gráfica de barras y línea
+    st_echarts(options=options, height="500px")
+
 # Evaluar si son incorrectos los datos de ingreso
 elif authentication_status==False:
   st.error('Usuario/Contraseña son incorrectos')
