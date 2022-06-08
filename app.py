@@ -43,7 +43,7 @@ def deflact_values(df:pd.DataFrame, var_id:str, columns:list, deflactors):
 def inverse_deflact_values(df:pd.DataFrame, var_id:str, columns:list):
 
   # Calcular el deflactor que tenga como base el año 2020
-  deflactors = deflactor_serie(2020)
+  deflactors_1 = deflactor_serie(2020)
 
   # Iterar cada año contenido dentro de la base de datos
   for year in df[f'{var_id}'].unique():
@@ -53,7 +53,7 @@ def inverse_deflact_values(df:pd.DataFrame, var_id:str, columns:list):
 
     # Filtrar información por año y dividir entre el deflactor que corresponde
     
-    df.loc[df['Año']==year, columns] = df.loc[df['Año']==year, columns].multiply(deflactors[year])
+    df.loc[df['Año']==year, columns] = df.loc[df['Año']==year, columns].multiply(deflactors_1[year])
 
   # Regresar la información
   return df
@@ -390,7 +390,7 @@ if authentication_status:
       cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows.csv', encoding='utf-8', na_values='-').fillna(0)
       
       # Evaluar si se pide deflactar o no
-      if constant:
+      if ammounts=='Saldos Constantes':
 
         # Inversiones
         columns = investments.columns.tolist()[:2]
@@ -401,7 +401,7 @@ if authentication_status:
         columns = cash_flows.columns.tolist()[:2]
         cash_flows = inverse_deflact_values(cash_flows, 'Año', columns)
         cash_flows = deflact_values(cash_flows, 'Año', columns, deflactors)
-      else:
+      elif ammounts=='Saldos Corrientes':
 
         # Inversiones
         columns = investments.columns.tolist()[:2]
