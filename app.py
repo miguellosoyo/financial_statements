@@ -573,7 +573,7 @@ if authentication_status:
             },
             "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}},
             "legend": {"data": df.data['Concepto'].tolist(), "bottom": -50,},
-            "grid": {"left": "3%", "right": "4%", "bottom": "3%", "containLabel": True},
+            "grid": {"left": "0%", "right": "0%", "bottom": "0%", "containLabel": True},
             "xAxis": {"type": "value", "name": "Montos", "nameLocation": "center"},
             "yAxis": {
                 "type": "category",
