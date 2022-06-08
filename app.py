@@ -565,14 +565,14 @@ if authentication_status:
     # Insertar una nota al pie de la tabla
     st.caption(f'Información financiera de {licensee}.')
     
+    # Integrar un título y subtitulo para el gráfico
+    st.header(f"Componentes del Flujo de Efectivo",)
+    st.subheader(f"Información Financiera de {licensee}")
+    
     # Definir las especificaciones de una gráfica de barras apiladas 
     options = {
-        "title": {
-            "text": f"Componentes del Flujo de Efectivo",
-            "subtext": f"Información Financiera de {licensee}",
-            },
             "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}},
-            "legend": {"data": df.data['Concepto'].tolist(), "type": "scroll", "orient": "vertical", "align": "right", "verticalAlign": "middle"},
+            "legend": {"data": df.data['Concepto'].tolist()},
             "grid": {"left": "5%", "right": "15%", "bottom": "5%", "containLabel": True},
             "xAxis": {"type": "value", "name": "Montos", "nameLocation": "center"},
             "yAxis": {
