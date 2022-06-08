@@ -584,7 +584,6 @@ if authentication_status:
                 "series": [{"name": f"{x}",
                             "type": "bar",
                             "stack": "total",
-                            "label": {"show": True},
                             "emphasis": {"focus": "series"},
                             "data": df.data.loc[df.data['Concepto']==x,:].values[0][1:].tolist(),
                             } for x in df.data['Concepto'].tolist()
