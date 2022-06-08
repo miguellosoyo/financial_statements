@@ -583,7 +583,7 @@ if authentication_status:
                         "type": "bar",
                         "stack": "total",
                         "emphasis": {"focus": "series"},
-                        "data": df.data.loc[df.data['Concepto']==x,:].values[0][1:].tolist(),
+                        "data": df.data.loc[df.data['Concepto']==x,:].round(2).values[0][1:].tolist(),
                         } for x in df.data['Concepto'].tolist()
                         ],
             }
