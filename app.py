@@ -661,13 +661,14 @@ if authentication_status:
       dataItem = list(dataItem)
 
       # Identificar la posición del dato coincidente
-      position = np.where(years_echart==dataItem[0])[0][0]
+      dataItem[0] = np.where(years_echart==dataItem[0])[0][0]
+      dataItem[1] = np.where(concepts_echart==dataItem[1])[0][0]
 
       # Adjuntar registros a las opciones de la gráfica
-      options["series"][position]["data"].append([dataItem[1], dataItem[2]])
+      options["series"][dataItem[0]]["data"].append([dataItem[1], dataItem[2]])
     
     # Integrar la gráfica
-    st_echarts(options=options, height="600px")
+    st_echarts(options=option, height="600px")
 
 # Evaluar si son incorrectos los datos de ingreso
 elif authentication_status==False:
