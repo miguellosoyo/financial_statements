@@ -572,7 +572,7 @@ if authentication_status:
             "subtext": f"Información Financiera de {licensee}",
             },
             "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}},
-            "legend": {"data": df.data['Concepto'].tolist(), "orient": "horizontal", "bottom": 20, "bottom": "center"},
+            "legend": {"data": df.data['Concepto'].tolist(), "orient": "horizontal", "bottom": 0,},
             "grid": {"left": "3%", "right": "4%", "bottom": "3%", "containLabel": True},
             "xAxis": {"type": "value", "name": "Montos", "nameLocation": "center"},
             "yAxis": {
@@ -593,7 +593,7 @@ if authentication_status:
             }
     
     # Integrar gráfica de barras
-    st_echarts(options=options, height="500px")
+    st_echarts(options=options, height="400px", width="600px")
     
 # Evaluar si son incorrectos los datos de ingreso
 elif authentication_status==False:
