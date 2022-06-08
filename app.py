@@ -620,7 +620,7 @@ if authentication_status:
     
     # Procesar la información
     echart_data = investments.melt(id_vars=['Concesionario', 'Año'], value_vars=investments.columns.tolist()[2:]).copy()
-    years_echart = echart_data['Año'].unique()
+    years_echart = [str(x) for x in echart_data['Año'].unique()]
     concepts_echart = echart_data['variable'].unique()
     data_echart = echart_data[['Año', 'variable', 'value']].values
 
@@ -658,7 +658,7 @@ if authentication_status:
       dataItem = list(dataItem)
 
       # Identificar la posición del dato coincidente
-      dataItem[0] = np.where(years_echart==dataItem[0])[0][0]
+      dataItem[0] = np.where(years_echart==str(dataItem[0]))[0][0]
       dataItem[1] = np.where(concepts_echart==dataItem[1])[0][0]
 
       # Adjuntar registros a las opciones de la gráfica
