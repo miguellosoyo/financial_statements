@@ -606,10 +606,8 @@ if True:
                           ],
                "legend": {
                    "data": [i for i in investments.columns if 'Anual' in i],
-                   "orient": "horizontal", 
-                   "x": "right", 
-                   "y": "bottom",
-                   "padding": -10,
+                   "show": True,
+                   "top": "6%",
                    },
                }
     
