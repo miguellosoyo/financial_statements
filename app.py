@@ -581,7 +581,7 @@ if authentication_status:
                 "name": "Periodo",
                 "nameLocation": "center",
                 "fontWeight": "bold",
-                "left": 10,
+                "left": 0,
                 },
             "series": [{"name": f"{x}",
                         "type": "bar",
@@ -593,7 +593,7 @@ if authentication_status:
             }
     
     # Integrar gráfica de barras
-    st_echarts(options=options, height="400px", width="750px")
+    st_echarts(options=options, height="400px", width="500px")
     
 # Evaluar si son incorrectos los datos de ingreso
 elif authentication_status==False:
