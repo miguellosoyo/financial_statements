@@ -633,13 +633,13 @@ if True:
                   ],
               "singleAxis": [
                              {
-                                 "left": 150,
+                              "left": 150,
                               "type": "category",
                               "boundaryGap": False,
                               "data": years_echart,
                               "top": f"{(idx * 100 / 7 + 5)}%",
                               "height": f"{(100 / 7 - 10)}%",
-                              "axisLabel": {"interval": 2},
+                              "axisLabel": {"interval": 1},
                               } for idx, _ in enumerate(years_echart)
                               ],
               "series": [
