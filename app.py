@@ -593,7 +593,7 @@ if True:
     options = {"xAxis": {"type": "category",
                              "data": investments['Año'].tolist(),
                              },
-               "yAxis":{"type": "value"}
+               "yAxis":{"type": "value"},
                "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}},
                "series": [{"name": f"{x}",
                            "type": "line",
