@@ -637,19 +637,17 @@ if authentication_status:
                         ],
                "yAxis":[
                         {"type": "value",
-                         "name": f"{inv_type}",
-                         "position": "right",
+                         "position": "left",
                          "alignTicks": True,
                          "axisLine":{
                              "show": True,
                          },
                          },
                         {"type": "value",
-                         "name": f"{cf_type}",
-                         "position": "left",
+                         "position": "right",
                          "alignTicks": True,
                          "axisLine":{
-                         "show": True,
+                         "show": False,
                          },
                          }
                         ],
