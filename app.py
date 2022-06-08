@@ -1,4 +1,6 @@
 # Importar librerías de trabajo
+from streamlit_echarts import st_echarts
+from streamlit_echarts import JsCode
 import streamlit as st
 import numpy as np
 import pandas as pd
