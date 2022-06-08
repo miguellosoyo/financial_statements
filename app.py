@@ -418,7 +418,7 @@ if authentication_status:
       licensee = st.selectbox(label='Selección de Concesionarios', options=licensee_elements)
       
       # Definir una línea de selección de periodos
-      years = [cash_flows['Año'].min(), cash_flows['Año'].max()]
+      years = [cash_flows[cash_flows["Concesionario"]==licensee]['Año'].min(), cash_flows["Concesionario"]==licensee]['Año'].max()]
       range_years = st.slider('Seleccione el Rango de Años a Analizar', int(years[0]), int(years[-1]), (int(years[0]), int(years[-1])))
       years = list(range(range_years[0],range_years[-1]+1))
 
