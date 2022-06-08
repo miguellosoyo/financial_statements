@@ -565,32 +565,36 @@ if authentication_status:
     # Insertar una nota al pie de la tabla
     st.caption(f'Información financiera de {licensee}.')
     
+    # Definir las especificaciones de una gráfica de barras apiladas 
     options = {
-          "title": {
-              "text": f"Componentes del Flujo de Efectivo",
-              "subtext": f"Información Financiera de {licensee}",
-              },
-          "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}},
-          "legend": {
-              "data": df.data['Concepto'].tolist()
-              },
-              "grid": {"left": "3%", "right": "4%", "bottom": "3%", "containLabel": True},
-              "xAxis": {"type": "value"},
-              "yAxis": {
-                  "type": "category",
-                  "data": df.data.columns.tolist()[1:],
-              },
-              "series": [{"name": f"{x}",
-                          "type": "bar",
-                          "stack": "total",
-                          "label": {"show": True},
-                          "emphasis": {"focus": "series"},
-                          "data": df.data.loc[df.data['Concepto']==x,:].values[0][1:].tolist(),
-                          } for x in df.data['Concepto'].tolist()
-                          ],
-              }
-      st_echarts(options=options, height="500px")
-
+        "title": {
+            "text": f"Componentes del Flujo de Efectivo",
+            "subtext": f"Información Financiera de {licensee}",
+            },
+            "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}},
+            "legend": {
+                "data": df.data['Concepto'].tolist()
+                },
+                "grid": {"left": "3%", "right": "4%", "bottom": "3%", "containLabel": True},
+                "xAxis": {"type": "value"},
+                "yAxis": {
+                    "type": "category",
+                    "data": df.data.columns.tolist()[1:],
+                    },
+                "series": [{"name": f"{x}",
+                            "type": "bar",
+                            "stack": "total",
+                            "label": {"show": True},
+                            "emphasis": {"focus": "series"},
+                            "data": df.data.loc[df.data['Concepto']==x,:].values[0][1:].tolist(),
+                            } for x in df.data['Concepto'].tolist()
+                            ],
+                }
+    
+    # Integrar gráfica de barras
+    st_echarts(options=options, height="500px")
+    
+# Evaluar si son incorrectos los datos de ingreso
 elif authentication_status==False:
   st.error('Usuario/Contraseña son incorrectos')
 elif authentication_status==None:
