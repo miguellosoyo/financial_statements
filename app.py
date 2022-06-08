@@ -607,7 +607,7 @@ if True:
                "legend": {
                    "data": [i for i in investments.columns if 'Anual' in i],
                    "show": True,
-                   "top": "6%",
+                   "bottom": "6%",
                    },
                }
     
