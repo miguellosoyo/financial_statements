@@ -619,6 +619,8 @@ if authentication_status:
             },
         ],
     }
+    
+    st_echarts(options=options, height="500px")
 
 elif authentication_status==False:
   st.error('Usuario/Contraseña son incorrectos')
