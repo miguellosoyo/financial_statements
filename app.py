@@ -165,7 +165,7 @@ if authentication_status:
     elif ammounts=='Saldos Constantes':
     
       # Incorprar el cuadro de ingreso del usuario
-      year_deflact = expander_deflact.selectbox('Seleccione el Año Base', options=range(1997,2022))
+      year_deflact = expander_deflact.selectbox('Seleccione el Año Base', options=sorted(range(2022), reverse=True))
 
       # Importar la información de los deflactores
       deflactors = deflactor_serie(year_deflact)    
