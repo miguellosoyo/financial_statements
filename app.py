@@ -543,7 +543,7 @@ if authentication_status:
     
     # Integrar métricas de WACC, TIR, tasa de reinversión (TRI), diferencia entre TIR y WACC, diferencia entre TRI y WACC
     col1, col2, col3, col4, col5 = st.columns(5)
-    col1.metric('VPN\n(miles de millones de pesos)', f'$ {round(vpn/1000000,1)}')
+    col1.metric('VPN MM', f'$ {round(vpn/1000000,1)}')
     col2.metric('WACC', f'{round(wacc_value*100,1)}%')
     col3.metric('TIR', f'{round(irr*100,1)}%')
     col4.metric('TIR - WACC', f'{round((irr-wacc_value)*100,1)}%')
