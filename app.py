@@ -567,7 +567,7 @@ if authentication_status:
             "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}},
             "legend": {"data": df.data['Concepto'].tolist()},
             "grid": {"left": "5%", "right": "15%", "bottom": "5%", "containLabel": True},
-            "xAxis": {"type": "value", "name": "Montos", "nameLocation": "center"},
+            "xAxis": {"type": "value",},
             "yAxis": {
                 "type": "category",
                 "data": df.data.columns.tolist()[1:],
