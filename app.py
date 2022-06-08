@@ -620,7 +620,7 @@ if authentication_status:
     
     # Procesar la información
     echart_data = investments.melt(id_vars=['Concesionario', 'Año'], value_vars=investments.columns.tolist()[2:]).copy()
-    years_echart = [str(x) for x in echart_data['Año'].unique()]
+    years_echart = np.array([str(x) for x in echart_data['Año'].unique()])
     concepts_echart = echart_data['variable'].unique()
     data_echart = echart_data[['Año', 'variable', 'value']].values
 
