@@ -569,7 +569,7 @@ if authentication_status:
           "title": {
               "text": f"Componentes del Flujo de Efectivo",
               "subtext": f"Información Financiera de {licensee}",
-              }
+              },
           "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}},
           "legend": {
               "data": df.data['Concepto'].tolist()
