@@ -8,6 +8,56 @@ import os
 pd.options.display.max_rows = None
 pd.options.display.max_columns = None
 
+# Definir una función para calcular la variable del deflactor
+def deflactor_serie(year:int):
+
+  # Importar información del PIB Nominal y Real
+  deflactors = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Cifras%20del%20PIB%20Nominal-Real.csv', encoding='latin', index_col=0)
+
+  # Establecer el índice de precios base 2013
+  deflactors['INPC'] = deflactors['PIB Nominal'].div(deflactors['PIB Real'])
+
+  # Calcular el deflactor 
+  deflactors['Deflactor'] = deflactors['INPC'].div(deflactors.loc[year, 'INPC'])
+
+  # Devolver la serie del deflactor
+  return deflactors['Deflactor']
+
+# Crear una función para deflactar información
+def deflact_values(df:pd.DataFrame, var_id:str, columns:list, deflactors):
+
+  # Iterar cada año contenido dentro de la base de datos
+  for year in df[f'{var_id}'].unique():
+
+    # Definir las variables a deflactar
+    columns = df.columns.tolist()[2:]
+
+    # Filtrar información por año y dividir entre el deflactor que corresponde
+    
+    df.loc[df['Año']==year, columns] = df.loc[df['Año']==year, columns].div(deflactors[year])
+
+  # Regresar la información
+  return df
+
+# Crear una función para deflactar información
+def inverse_deflact_values(df:pd.DataFrame, var_id:str, columns:list):
+
+  # Calcular el deflactor que tenga como base el año 2020
+  deflactors = deflactor_serie(2020)
+
+  # Iterar cada año contenido dentro de la base de datos
+  for year in df[f'{var_id}'].unique():
+
+    # Definir las variables a deflactar
+    columns = df.columns.tolist()[2:]
+
+    # Filtrar información por año y dividir entre el deflactor que corresponde
+    
+    df.loc[df['Año']==year, columns] = df.loc[df['Año']==year, columns].multiply(deflactors[year])
+
+  # Regresar la información
+  return df
+
 # Definir una función que ilumine una fila sí y otra no de un color en específico
 def highlight(x):
 
@@ -96,6 +146,30 @@ if authentication_status:
     expander_analysis.subheader('Tipos de Análisis')
     analysis_elements = sorted(('Estados Financieros', 'Análisis de Inversiones',))
     analysis = expander_analysis.radio('Selección de Análisis', options=analysis_elements)
+
+    # Definir un cuadro expansivo para la selección del tipo de saldos
+    expander_deflact = st.expander('Deflactores')
+
+    # Integrar título del área de login
+    expander_deflact.header('Variables para Deflactar')
+
+    # Colocar cuadros de selección para las tareas de Saldos Corrientes o Deflactados
+    current = expander_deflact.checkbox('Saldos Corrientes')
+    constant = expander_deflact.checkbox('Saldos Constantes')
+    
+    # Evaluar si los saldos serán corrientes
+    if current:
+      
+      # Importar la información de los deflactores
+      deflactors = deflactor_serie(2020)
+
+    elif constant:
+    
+      # Incorprar el cuadro de ingreso del usuario
+      year_deflact = expander_deflact.selectbox(range(1997,2022))
+
+      # Importar la información de los deflactores
+      deflactors = deflactor_serie(year_deflact)    
 
   # Evaluar si es un análisis financiero el que se quiere realizar
   if analysis=='Estados Financieros':
@@ -315,7 +389,29 @@ if authentication_status:
       
       # Importar información de los flujos de efectivo de los concesionarios
       cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows.csv', encoding='utf-8', na_values='-').fillna(0)
-          
+      
+      # Evaluar si se pide deflactar o no
+      if constant:
+
+        # Inversiones
+        columns = investments.columns.tolist()[:2]
+        investments = inverse_deflact_values(investments, 'Año', columns)
+        investments = deflact_values(investments, 'Año', columns, deflactors)
+        
+        # Flujos de efectivo
+        columns = cash_flows.columns.tolist()[:2]
+        cash_flows = inverse_deflact_values(cash_flows, 'Año', columns)
+        cash_flows = deflact_values(cash_flows, 'Año', columns, deflactors)
+      else:
+
+        # Inversiones
+        columns = investments.columns.tolist()[:2]
+        investments = inverse_deflact_values(investments, 'Año', columns)
+        
+        # Flujos de efectivo
+        columns = cash_flows.columns.tolist()[:2]
+        cash_flows = inverse_deflact_values(cash_flows, 'Año', columns)
+
       # Definir un menú de selección para los concesionarios
       licensee_elements = sorted(['KCSM', 'Ferrosur', 'Ferromex'])
       licensee = st.selectbox(label='Selección de Concesionarios', options=licensee_elements)
