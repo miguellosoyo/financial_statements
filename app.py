@@ -590,24 +590,21 @@ if True:
     st.text(f"Información Financiera de {licensee}")
     
     # Definir las especificaciones de una gráfica de radar con barras
-    options = {"angleAxis": {"type": "category",
+    options = {"xAxis": {"type": "category",
                              "data": investments['Año'].tolist(),
                              },
+               "yAxis":{"type": "value"}
                "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}},
-               "radiusAxis": {},
-               "polar": {},
                "series": [{"name": f"{x}",
-                           "type": "bar",
-                           "coordinateSystem": "polar",
-                           "stack": "a",
+                           "type": "line",
+                           "areaStyle": {},
+                           "stack": "Total",
                            "emphasis": {"focus": "series"},
                            "data": investments[x].round(2).values.tolist(),
                            } for x in [i for i in investments.columns if 'Anual' in i]
                           ],
                "legend": {
                    "data": [i for i in investments.columns if 'Anual' in i],
-                   "show": True,
-                   "bottom": "6%",
                    },
                }
     
@@ -618,55 +615,6 @@ if True:
     st.subheader(f"Evolución de los Distintos Conceptos de Inversión del Concesionario",)
     st.text(f"Información Financiera de {licensee}")
     
-    # Procesar la información
-    echart_data = investments.melt(id_vars=['Concesionario', 'Año'], value_vars=investments.columns.tolist()[2:]).copy()
-    years_echart = [str(x) for x in echart_data['Año'].unique()]
-    concepts_echart = [x for x in echart_data['variable'].unique() if 'Anual' in x]
-    data_echart = echart_data[echart_data['variable'].isin(concepts_echart)][['Año', 'variable', 'value']].values
-
-    # Crear un gráfico de dispersión de un solo eje
-    options = {
-        "tooltip": {"position": "top"},
-        "title": [
-                  {"textBaseline": "middle", "top": f"{(idx + 0.5) * 100 / 7}%", "text": day} for idx, day in enumerate(concepts_echart)
-                  ],
-              "singleAxis": [
-                             {
-                              "left": 150,
-                              "type": "category",
-                              "boundaryGap": False,
-                              "data": years_echart,
-                              "top": f"{(idx * 100 / 7 + 5)}%",
-                              "height": f"{(100 / 7 - 10)}%",
-                              "axisLabel": {"interval": 1},
-                              } for idx, _ in enumerate(years_echart)
-                              ],
-              "series": [
-                         {
-                             "singleAxisIndex": idx,
-                             "coordinateSystem": "singleAxis",
-                             "type": "scatter",
-                             "data": [],
-                          } for idx, _ in enumerate(years_echart)
-                          ],
-              }
-
-    # Iterar para cada elemento de la lista de listas que contiene la información
-    for dataItem in data_echart:
-
-      # Convertir en lista el registro extraído
-      dataItem = list(dataItem)
-      
-      # Identificar la posición del dato coincidente
-      dataItem[0] = years_echart.index(str(dataItem[0]))
-      dataItem[1] = concepts_echart.index(dataItem[1])
-
-      # Adjuntar registros a las opciones de la gráfica
-      options["series"][dataItem[0]]["data"].append([dataItem[1], dataItem[2]])
-    
-    # Integrar la gráfica
-    st_echarts(options=options, height="600px")
-
 # Evaluar si son incorrectos los datos de ingreso
 elif authentication_status==False:
   st.error('Usuario/Contraseña son incorrectos')
