@@ -438,12 +438,12 @@ if authentication_status:
       year = st.selectbox(label='Seleccione el Año del que Desea el WACC', options=sorted(wacc['Año'].unique().tolist(), reverse=True)[1:])
         
     # Filtrar DataFrames por periodo seleccionado
-    investments = investments[investments['Año'].isin(years)]
-    cash_flows = cash_flows[cash_flows['Año'].isin(years)]
+    investments = investments[(investments['Año'].isin(years)) & (investments['Concesionario']==licensee.upper())]
+    cash_flows = cash_flows[(cash_flows['Año'].isin(years)) & (cash_flows['Concesionario']==licensee)]
     
     # Filtrar información por concesionario y seleccionar las variables de interés
-    df_inv = investments[investments['Concesionario']==licensee.upper()][['Año', inv_type]].reset_index(drop=True).copy().set_index('Año')
-    df_cf = cash_flows[cash_flows['Concesionario']==licensee].reset_index(drop=True).copy().set_index('Año')
+    df_inv = investments[['Año', inv_type]].reset_index(drop=True).copy().set_index('Año')
+    df_cf = cash_flows.reset_index(drop=True).copy().set_index('Año')
     
     # Calcular NOPAT
     df_cf['NOPAT'] = df_cf['Utilidad de Operación']*(1-0.3)
@@ -584,6 +584,33 @@ if authentication_status:
     # Integrar gráfica de barras
     st_echarts(options=options, height="400px")
     
+    # Integrar un título y subtitulo para el gráfico
+    st.subheader(f"Elementos de Inversión del Concesionario",)
+    st.text(f"Información Financiera de {licensee}")
+    
+    # Definir las especificaciones de una gráfica de radar con barras
+    options = {"angleAxis": {"type": "category",
+                             "data": investments['Año'].tolist(),
+                             },
+               "radiusAxis": {},
+               "polar": {},
+               "series": [{"name": f"{x}",
+                           "type": "bar",
+                           "coordinateSystem": "polar",
+                           "stack": "a"
+                           "emphasis": {"focus": "series"},
+                           "data": investments[x].round(2).values[0][1:].tolist(),
+                           } for x in [for i in investments.columns() if 'Anual' in i]
+                          ],
+               "legend": {
+                   "show": "true",
+                   "data": [for i in investments.columns() if 'Anual' in i]
+                   },
+               }
+    
+    # Integrar gráfica de radar
+    st_echarts(options=options, height="400px")
+
 # Evaluar si son incorrectos los datos de ingreso
 elif authentication_status==False:
   st.error('Usuario/Contraseña son incorrectos')
