@@ -656,7 +656,12 @@ if authentication_status:
 
     # Iterar para cada elemento de la lista de listas que contiene la información
     for dataItem in data_echart:
-        option["series"][dataItem[0]]["data"].append([dataItem[1], dataItem[2]])
+
+      # Convertir en lista el registro extraído
+      dataItem = list(dataItem)
+
+      # Adjuntar registros a las opciones de la gráfica
+      option["series"][dataItem[0]]["data"].append([dataItem[1], dataItem[2]])
     
     # Integrar la gráfica
     st_echarts(options=option, height="600px")
