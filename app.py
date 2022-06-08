@@ -667,7 +667,7 @@ if authentication_status:
       options["series"][position]["data"].append([dataItem[1], dataItem[2]])
     
     # Integrar la gráfica
-    st_echarts(options=option, height="600px")
+    st_echarts(options=options, height="600px")
 
 # Evaluar si son incorrectos los datos de ingreso
 elif authentication_status==False:
