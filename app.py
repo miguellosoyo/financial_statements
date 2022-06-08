@@ -136,7 +136,7 @@ else:
   authentication_status = (username in usernames) & (password in passwords)
 
 # Evaluar los eventos identificados durante el login
-if authentication_status:
+if True:
   
   # Integrar a la barra lateral la selección de tipo de análisis
   with st.sidebar:
@@ -173,6 +173,7 @@ if authentication_status:
       deflactors = deflactor_serie(year_deflact)    
 
   # Evaluar si es un análisis financiero el que se quiere realizar
+  analysis='Análisis de Inversiones'
   if analysis=='Estados Financieros':
 
     # Integrar a la barra lateral la selección de concesionarios y tipo de reporte
@@ -620,22 +621,22 @@ if authentication_status:
     
     # Procesar la información
     echart_data = investments.melt(id_vars=['Concesionario', 'Año'], value_vars=investments.columns.tolist()[2:]).copy()
-    years_echart = np.array([str(x) for x in echart_data['Año'].unique()])
-    concepts_echart = echart_data['variable'].unique()
-    data_echart = echart_data[['Año', 'variable', 'value']].values
+    years_echart = [str(x) for x in echart_data['Año'].unique()]
+    concepts_echart = [x for x in echart_data['variable'].unique() if 'Anual' in x]
+    data_echart = echart_data[echart_data['variable'].isin(concepts_echart)][['Año', 'variable', 'value']].values
 
     # Crear un gráfico de dispersión de un solo eje
     options = {
         "tooltip": {"position": "top"},
         "title": [
-                  {"textBaseline": "middle", "top": f"{(idx + 0.5) * 100 / 7}%", "text": day} for idx, day in enumerate(years_echart)
+                  {"textBaseline": "middle", "top": f"{(idx + 0.5) * 100 / 7}%", "text": day} for idx, day in enumerate(concepts_echart)
                   ],
               "singleAxis": [
                              {
                                  "left": 150,
                               "type": "category",
                               "boundaryGap": False,
-                              "data": concepts_echart,
+                              "data": years_echart,
                               "top": f"{(idx * 100 / 7 + 5)}%",
                               "height": f"{(100 / 7 - 10)}%",
                               "axisLabel": {"interval": 2},
@@ -656,10 +657,10 @@ if authentication_status:
 
       # Convertir en lista el registro extraído
       dataItem = list(dataItem)
-
+      
       # Identificar la posición del dato coincidente
-      dataItem[0] = np.where(years_echart==str(dataItem[0]))[0][0]
-      dataItem[1] = np.where(concepts_echart==dataItem[1])[0][0]
+      dataItem[0] = years_echart.index(str(dataItem[0]))
+      dataItem[1] = concepts_echart.index(dataItem[1])
 
       # Adjuntar registros a las opciones de la gráfica
       options["series"][dataItem[0]]["data"].append([dataItem[1], dataItem[2]])
