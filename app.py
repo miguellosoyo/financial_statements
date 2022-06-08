@@ -609,7 +609,7 @@ if True:
                    "orient": "horizontal", 
                    "x": "right", 
                    "y": "bottom",
-                   "pad":"10px",
+                   "padding": 10,
                    },
                }
     
