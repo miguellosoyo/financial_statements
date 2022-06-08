@@ -572,7 +572,7 @@ if authentication_status:
             "subtext": f"Información Financiera de {licensee}",
             },
             "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}},
-            "legend": {"data": df.data['Concepto'].tolist(), "orient": "vertical", "right": -20, "top": "center"},
+            "legend": {"data": df.data['Concepto'].tolist(), "orient": "vertical", "left": 20, "top": "center"},
             "grid": {"left": "3%", "right": "4%", "bottom": "3%", "containLabel": True},
             "xAxis": {"type": "value", "name": "Montos", "nameLocation": "center"},
             "yAxis": {
@@ -580,6 +580,8 @@ if authentication_status:
                 "data": df.data.columns.tolist()[1:],
                 "name": "Periodo",
                 "nameLocation": "center",
+                "fontWeight": "bold",
+                "left": 10,
                 },
             "series": [{"name": f"{x}",
                         "type": "bar",
