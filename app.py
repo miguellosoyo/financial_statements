@@ -614,6 +614,53 @@ if authentication_status:
     # Integrar gráfica de radar
     st_echarts(options=options, height="400px")
 
+    # Integrar un título y subtitulo para el gráfico
+    st.subheader(f"Evolución de los Distintos Conceptos de Inversión del Concesionario",)
+    st.text(f"Información Financiera de {licensee}")
+    
+    # Procesar la información
+    echart_data = investments.melt(id_vars=['Concesionario', 'Año'], value_vars=investments.columns.tolist()[2:]).copy()
+    years_echart = echart_data['Año'].unique()
+    concepts_echart = echart_data['variable'].unique()
+    data_echart = echart_data[['Año', 'variable', 'value']].values
+
+    # Crear un gráfico de dispersión de un solo eje
+    option = {
+        "tooltip": {"position": "top"},
+        "title": [
+                  {"textBaseline": "middle", "top": f"{(idx + 0.5) * 100 / 7}%", "text": day} for idx, day in enumerate(years_echart)
+                  ],
+              "singleAxis": [
+                             {
+                                 "left": 150,
+                              "type": "category",
+                              "boundaryGap": False,
+                              "data": concepts_echart,
+                              "top": f"{(idx * 100 / 7 + 5)}%",
+                              "height": f"{(100 / 7 - 10)}%",
+                              "axisLabel": {"interval": 2},
+                              } for idx, _ in enumerate(years_echart)
+                              ],
+              "series": [
+                         {
+                             "singleAxisIndex": idx,
+                             "coordinateSystem": "singleAxis",
+                             "type": "scatter",
+                             "data": [],
+                             "symbolSize": JsCode(
+                                 "function(dataItem){return dataItem[1]*4}"
+                                 ).js_code,
+                          } for idx, _ in enumerate(years_echart)
+                          ],
+              }
+
+    # Iterar para cada elemento de la lista de listas que contiene la información
+    for dataItem in data_echart:
+        option["series"][dataItem[0]]["data"].append([dataItem[1], dataItem[2]])
+    
+    # Integrar la gráfica
+    st_echarts(options=option, height="600px")
+
 # Evaluar si son incorrectos los datos de ingreso
 elif authentication_status==False:
   st.error('Usuario/Contraseña son incorrectos')
