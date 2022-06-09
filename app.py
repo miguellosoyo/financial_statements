@@ -107,8 +107,8 @@ def irr(values, guess=0.1, tol=1e-12, maxiter=100):
 
 # Definir usuarios y contraseñas
 names = ['César','Angélica', 'Paola', 'Edith']
-usernames = ['cesar_artf','angelica_artf', 'paola_artf', 'edith_artf', 'miguel']
-passwords = ['Sandía99.','Sandía99.', 'Sandía99.', 'Sandía99.', 'Sandía99.']
+usernames = ['cesar_artf','angelica_artf', 'paola_artf', 'edith_artf',]
+passwords = ['Sandía99.','Sandía99.', 'Sandía99.', 'Sandía99.',]
 
 # Definir variables vacías para usuario y contraseña
 username = '' 
@@ -180,9 +180,9 @@ if authentication_status:
 
       # Definir un menú de selección para los concesionarios
       st.subheader('Concesionarios')
-      licensee_elements = sorted(['Empresa 1', 'Empresa 2', 'Empresa 3'])
-      licensee_dict = {'Empresa 1':'KCSM', 'Empresa 2':'Ferrosur', 'Empresa 3':'Ferromex'}
-      # licensee_elements = sorted(['KCSM', 'Ferrosur', 'Ferromex'])
+      # licensee_elements = sorted(['Empresa 1', 'Empresa 2', 'Empresa 3'])
+      # licensee_dict = {'Empresa 1':'KCSM', 'Empresa 2':'Ferrosur', 'Empresa 3':'Ferromex'}
+      licensee_elements = sorted(['KCSM', 'Ferrosur', 'Ferromex'])
       licensee = st.selectbox(label='Selección de Concesionarios', options=licensee_elements)
 
       # Definir un menú de selección para los diferentes reportes financieros
@@ -193,20 +193,20 @@ if authentication_status:
     # Evaluar el tipo de reporte seleccionado
     if report=='Balance General':
       try:
-        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee_dict[licensee]}%20ESF.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
+        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ESF.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
       except:
-        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee_dict[licensee]}%20ESF.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
+        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ESF.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
       
     elif report=='Estado de Resultados':
       try:
-        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee_dict[licensee]}%20ERI.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
+        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
       except:
-        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee_dict[licensee]}%20ERI.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
+        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
     elif report=='Estado de Flujos de Efectivo':
       try:
-        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee_dict[licensee]}%20ERI.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
+        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
       except:
-        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee_dict[licensee]}%20ERI.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
+        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
     # Obtener los periodos de estudio
     years = data.columns.tolist()
 
@@ -416,14 +416,14 @@ if authentication_status:
         cash_flows = inverse_deflact_values(cash_flows, 'Año', columns)
 
       # Definir un menú de selección para los concesionarios
-      licensee_elements = sorted(['Empresa 1', 'Empresa 2', 'Empresa 3'])
-      licensee_dict = {'Empresa 1':'KCSM', 'Empresa 2':'Ferrosur', 'Empresa 3':'Ferromex'}
-      # licensee_elements = sorted(['KCSM', 'Ferrosur', 'Ferromex'])
+      # licensee_elements = sorted(['Empresa 1', 'Empresa 2', 'Empresa 3'])
+      # licensee_dict = {'Empresa 1':'KCSM', 'Empresa 2':'Ferrosur', 'Empresa 3':'Ferromex'}
+      licensee_elements = sorted(['KCSM', 'Ferrosur', 'Ferromex'])
             
       licensee = st.selectbox(label='Selección de Concesionarios', options=licensee_elements)
       
       # Definir una línea de selección de periodos
-      years = [cash_flows[cash_flows["Concesionario"]==licensee_dict[licensee]]['Año'].min(), cash_flows[cash_flows["Concesionario"]==licensee_dict[licensee]]['Año'].max()]
+      years = [cash_flows[cash_flows["Concesionario"]==licensee]['Año'].min(), cash_flows[cash_flows["Concesionario"]==licensee]['Año'].max()]
       range_years = st.slider('Seleccione el Rango de Años a Analizar', int(years[0]), int(years[-1]), (int(years[0]), int(years[-1])))
       years = list(range(range_years[0],range_years[-1]+1))
 
@@ -443,8 +443,8 @@ if authentication_status:
       year = st.selectbox(label='Seleccione el Año del que Desea el WACC', options=sorted(wacc['Año'].unique().tolist(), reverse=True)[1:])
         
     # Filtrar DataFrames por periodo seleccionado
-    investments = investments[(investments['Año'].isin(years)) & (investments['Concesionario']==licensee_dict[licensee].upper())]
-    cash_flows = cash_flows[(cash_flows['Año'].isin(years)) & (cash_flows['Concesionario']==licensee_dict[licensee])]
+    investments = investments[(investments['Año'].isin(years)) & (investments['Concesionario']==licensee.upper())]
+    cash_flows = cash_flows[(cash_flows['Año'].isin(years)) & (cash_flows['Concesionario']==licensee)]
     
     # Filtrar información por concesionario y seleccionar las variables de interés
     df_inv = investments[['Año', inv_type]].reset_index(drop=True).copy().set_index('Año')
@@ -454,7 +454,7 @@ if authentication_status:
     df_cf['NOPAT'] = df_cf['Utilidad de Operación']*(1-0.3)
     
     # Obtener el dato del WACC del concesionario
-    wacc_value = wacc[(wacc['Concesionario']==licensee_dict[licensee].upper()) & (wacc['Año']==year)]['WACC'].values[0]
+    wacc_value = wacc[(wacc['Concesionario']==licensee.upper()) & (wacc['Año']==year)]['WACC'].values[0]
     
     # Concatenar información
     df = pd.concat([df_inv, df_cf], axis=1).fillna(0)
@@ -477,9 +477,9 @@ if authentication_status:
     
     # Importar información para el cálculo de la tasa de reinversión
     try:
-      balance = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee_dict[licensee]}%20ESF.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
+      balance = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ESF.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
     except:
-      balance = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee_dict[licensee]}%20ESF.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
+      balance = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ESF.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
     
     # Calcular VPN
     vpn = df['Flujos de Efectivo Descontados'].sum()
