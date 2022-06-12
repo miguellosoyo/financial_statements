@@ -107,8 +107,8 @@ def irr(values, guess=0.1, tol=1e-12, maxiter=100):
 
 # Definir usuarios y contraseñas
 names = ['César','Angélica', 'Paola', 'Edith']
-usernames = ['cesar_artf','angelica_artf', 'paola_artf', 'edith_artf',]
-passwords = ['Sandía99.','Sandía99.', 'Sandía99.', 'Sandía99.',]
+usernames = ['cesar_artf','angelica_artf', 'paola_artf', 'edith_artf']
+passwords = ['Sandía99.','Sandía99.', 'Sandía99.', 'Sandía99.']
 
 # Definir variables vacías para usuario y contraseña
 username = '' 
@@ -180,8 +180,6 @@ if authentication_status:
 
       # Definir un menú de selección para los concesionarios
       st.subheader('Concesionarios')
-      # licensee_elements = sorted(['Empresa 1', 'Empresa 2', 'Empresa 3'])
-      # licensee_dict = {'Empresa 1':'KCSM', 'Empresa 2':'Ferrosur', 'Empresa 3':'Ferromex'}
       licensee_elements = sorted(['KCSM', 'Ferrosur', 'Ferromex'])
       licensee = st.selectbox(label='Selección de Concesionarios', options=licensee_elements)
 
@@ -389,10 +387,18 @@ if authentication_status:
       
       # Importar información de las inversiones de los concesionarios
       investments = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Investments.csv', encoding='latin', na_values='-').fillna(0)
+      investments = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Investments%20Mod.csv', encoding='latin', na_values='-').fillna(0)
       
       # Importar información de los flujos de efectivo de los concesionarios
       cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows.csv', encoding='utf-8', na_values='-').fillna(0)
-      
+      cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows%20Mod.csv', encoding='utf-8', na_values='-').fillna(0)
+
+      # Importar información del Estado de Resultados del Concesionario
+      try:
+        eri = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
+      except:
+        eri = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
+
       # Evaluar si se pide deflactar o no
       if ammounts=='Saldos Constantes':
 
@@ -416,10 +422,7 @@ if authentication_status:
         cash_flows = inverse_deflact_values(cash_flows, 'Año', columns)
 
       # Definir un menú de selección para los concesionarios
-      # licensee_elements = sorted(['Empresa 1', 'Empresa 2', 'Empresa 3'])
-      # licensee_dict = {'Empresa 1':'KCSM', 'Empresa 2':'Ferrosur', 'Empresa 3':'Ferromex'}
       licensee_elements = sorted(['KCSM', 'Ferrosur', 'Ferromex'])
-            
       licensee = st.selectbox(label='Selección de Concesionarios', options=licensee_elements)
       
       # Definir una línea de selección de periodos
@@ -623,7 +626,8 @@ if authentication_status:
     colors = ['#C7A479', '#1E5847']
     
     # Definir las especificaciones de un gráfico de barras y línea
-    options = {"tooltip":{
+    options = {"color": colors,
+               "tooltip":{
                    "trigger": "axis", "axisPointer": {"type": "shadow"}
                    },
                "grid":{
@@ -642,34 +646,43 @@ if authentication_status:
                         ],
                "yAxis":[
                         {"type": "value",
-                         "position": "left",
-                         "alignTicks": True,
-                         "axisLine":{
-                             "show": True,
-                         },
-                         },
-                        {"type": "value",
+                         "name": f"{inv_type}",
                          "position": "right",
                          "alignTicks": True,
                          "axisLine":{
-                         "show": False,
+                             "show": True,
+                             "lineStyle": {
+                                 "color": colors[0]
+                                 }
+                                 },
                          },
+                        {"type": "value",
+                         "name": f"{cf_type}",
+                         "position": "left",
+                         "alignTicks": True,
+                         "axisLine": {
+                         "show": True,
+                         "lineStyle": {
+                             "color": colors[1]
+                             }
+                             },
                          }
                         ],
                "series":[
                          {"name": f'{inv_type}',
                           "type": "bar",
-                          "data": df_inv[inv_type].round(2).values.tolist()
+                          "data": investments[inv_type].values.tolist()
                           },
                          {"name": f"{cf_type}",
                           "type": "line",
-                          "data": df_cf[cf_type].round(2).values.tolist()
+                          "yAxisIndex": 2,
+                          "data": cash_flows[cf_type].values.tolist()
                           }
                          ]
                }
     
     # Integrar gráfica de barras y línea
-    st_echarts(options=options, height="400px")
+    st_echarts(options=options, height="500px")
 
 # Evaluar si son incorrectos los datos de ingreso
 elif authentication_status==False:
