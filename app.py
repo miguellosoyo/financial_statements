@@ -391,7 +391,7 @@ if authentication_status:
       
       # Importar información de los flujos de efectivo de los concesionarios
       cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows.csv', encoding='utf-8', na_values='-').fillna(0)
-      cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows%20Mod.csv', encoding='utf-8', na_values='-').fillna(0)
+      cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows%20Mod.csv', encoding='latin', na_values='-').fillna(0)
 
       # Importar información del Estado de Resultados del Concesionario
       try:
