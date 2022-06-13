@@ -136,7 +136,7 @@ else:
   authentication_status = (username in usernames) & (password in passwords)
 
 # Evaluar los eventos identificados durante el login
-if True:
+if authentication_status:
   
   # Integrar a la barra lateral la selección de tipo de análisis
   with st.sidebar:
@@ -171,7 +171,7 @@ if True:
 
       # Importar la información de los deflactores
       deflactors = deflactor_serie(year_deflact)    
-  analysis='Análisis de Inversiones'
+  
   # Evaluar si es un análisis financiero el que se quiere realizar
   if analysis=='Estados Financieros':
 
