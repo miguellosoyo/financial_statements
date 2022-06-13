@@ -393,12 +393,6 @@ if authentication_status:
       cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows.csv', encoding='utf-8', na_values='-').fillna(0)
       cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows%20Mod.csv', encoding='latin', na_values='-').fillna(0)
 
-      # Importar información del Estado de Resultados del Concesionario
-      try:
-        eri = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
-      except:
-        eri = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
-
       # Evaluar si se pide deflactar o no
       if ammounts=='Saldos Constantes':
 
@@ -411,15 +405,6 @@ if authentication_status:
         columns = cash_flows.columns.tolist()[:2]
         cash_flows = inverse_deflact_values(cash_flows, 'Año', columns)
         cash_flows = deflact_values(cash_flows, 'Año', columns, deflactors)
-      elif ammounts=='Saldos Corrientes':
-
-        # Inversiones
-        columns = investments.columns.tolist()[:2]
-        investments = inverse_deflact_values(investments, 'Año', columns)
-        
-        # Flujos de efectivo
-        columns = cash_flows.columns.tolist()[:2]
-        cash_flows = inverse_deflact_values(cash_flows, 'Año', columns)
 
       # Definir un menú de selección para los concesionarios
       licensee_elements = sorted(['KCSM', 'Ferrosur', 'Ferromex'])
