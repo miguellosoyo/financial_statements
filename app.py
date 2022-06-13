@@ -136,7 +136,7 @@ else:
   authentication_status = (username in usernames) & (password in passwords)
 
 # Evaluar los eventos identificados durante el login
-if authentication_status:
+if True:
   
   # Integrar a la barra lateral la selección de tipo de análisis
   with st.sidebar:
@@ -171,7 +171,7 @@ if authentication_status:
 
       # Importar la información de los deflactores
       deflactors = deflactor_serie(year_deflact)    
-
+  analysis='Análisis de Inversiones'
   # Evaluar si es un análisis financiero el que se quiere realizar
   if analysis=='Estados Financieros':
 
@@ -391,7 +391,7 @@ if authentication_status:
       
       # Importar información de los flujos de efectivo de los concesionarios
       cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows.csv', encoding='utf-8', na_values='-').fillna(0)
-      cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows%20Mod.csv', encoding='latin', na_values='-').fillna(0)
+      cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows%20Mod.csv', encoding='utf-8', na_values='-').fillna(0)
 
       # Evaluar si se pide deflactar o no
       if ammounts=='Saldos Constantes':
@@ -410,8 +410,8 @@ if authentication_status:
       licensee_elements = sorted(['KCSM', 'Ferrosur', 'Ferromex'])
       licensee = st.selectbox(label='Selección de Concesionarios', options=licensee_elements)
       
-      # Definir una línea de selección de periodos
-      years = [cash_flows[cash_flows["Concesionario"]==licensee]['Año'].min(), cash_flows[cash_flows["Concesionario"]==licensee]['Año'].max()]
+      # Definir una línea de selección de 
+      years = [cash_flows[cash_flows["Concesionario"]==licensee.upper()]['Año'].min(), cash_flows[cash_flows["Concesionario"]==licensee.upper()]['Año'].max()]
       range_years = st.slider('Seleccione el Rango de Años a Analizar', int(years[0]), int(years[-1]), (int(years[0]), int(years[-1])))
       years = list(range(range_years[0],range_years[-1]+1))
 
@@ -432,7 +432,7 @@ if authentication_status:
         
     # Filtrar DataFrames por periodo seleccionado
     investments = investments[(investments['Año'].isin(years)) & (investments['Concesionario']==licensee.upper())]
-    cash_flows = cash_flows[(cash_flows['Año'].isin(years)) & (cash_flows['Concesionario']==licensee)]
+    cash_flows = cash_flows[(cash_flows['Año'].isin(years)) & (cash_flows['Concesionario']==licensee.upper())]
     
     # Filtrar información por concesionario y seleccionar las variables de interés
     df_inv = investments[['Año', inv_type]].reset_index(drop=True).copy().set_index('Año')
