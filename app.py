@@ -419,7 +419,7 @@ if True:
       dr = st.number_input('Ingresar la Tasa de Descuento', min_value=0., max_value=100., value=7.32)/100
       
       # Definir una lista con la selección de inversiones
-      inv_type = st.selectbox(label='Seleccione el Tipo de Inversión a Analizar', options=investments.columns[2:].tolist())
+      inv_type = st.selectbox(label='Seleccione el Tipo de Inversión a Analizar', options=[x for x in investments.columns[2:].tolist() if not 'Acumulada' in x])
 
       # Definir una lista con la selección de flujos de efectivo
       cf_type = st.selectbox(label='Seleccione el Tipo de Flujo de Efectivo a Analizar', options=sorted(['Ingresos Totales', 'NOPAT', 'Utilidad de  Operación', 'Utilidad Neta']))
