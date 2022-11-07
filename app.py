@@ -14,8 +14,9 @@ pd.options.display.max_columns = None
 def deflactor_serie(year:int):
 
   # Importar información del PIB Nominal y Real
-  deflactors = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Cifras%20del%20PIB%20Nominal-Real.csv', encoding='latin', index_col=0)
-
+  # deflactors = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Cifras%20del%20PIB%20Nominal-Real.csv', encoding='latin', index_col=0)
+  deflactors = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Cifras%20del%20PIB%20Nominal-Real.csv?token=GHSAT0AAAAAABZLORHNL6MJFQW3TAC2CBHIY3JMASA', encoding='latin', index_col=0)
+  
   # Establecer el índice de precios base 2013
   deflactors['INPC'] = deflactors['PIB Nominal'].div(deflactors['PIB Real'])
 
