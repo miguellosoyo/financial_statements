@@ -14,9 +14,8 @@ pd.options.display.max_columns = None
 def deflactor_serie(year:int):
 
   # Importar información del PIB Nominal y Real
-  # deflactors = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Cifras%20del%20PIB%20Nominal-Real.csv', encoding='latin', index_col=0)
-  deflactors = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Cifras%20del%20PIB%20Nominal-Real.csv?token=GHSAT0AAAAAABZLORHNL6MJFQW3TAC2CBHIY3JMASA', encoding='latin', index_col=0)
-  
+  deflactors = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Cifras%20del%20PIB%20Nominal-Real.csv', encoding='latin', index_col=0)
+    
   # Establecer el índice de precios base 2013
   deflactors['INPC'] = deflactors['PIB Nominal'].div(deflactors['PIB Real'])
 
@@ -192,20 +191,20 @@ if authentication_status:
     # Evaluar el tipo de reporte seleccionado
     if report=='Balance General':
       try:
-        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ESF.csv?token=GHSAT0AAAAAABZLORHNL6MJFQW3TAC2CBHIY3JMASA', encoding='utf-8', index_col=0, na_values='-').fillna(0)
+        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ESF.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
       except:
-        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ESF.csv?token=GHSAT0AAAAAABZLORHNL6MJFQW3TAC2CBHIY3JMASA', encoding='latin', index_col=0, na_values='-').fillna(0)
+        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ESF.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
       
     elif report=='Estado de Resultados':
       try:
-        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv?token=GHSAT0AAAAAABZLORHNL6MJFQW3TAC2CBHIY3JMASA', encoding='utf-8', index_col=0, na_values='-').fillna(0)
+        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
       except:
-        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv?token=GHSAT0AAAAAABZLORHNL6MJFQW3TAC2CBHIY3JMASA', encoding='latin', index_col=0, na_values='-').fillna(0)
+        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
     elif report=='Estado de Flujos de Efectivo':
       try:
-        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv?token=GHSAT0AAAAAABZLORHNL6MJFQW3TAC2CBHIY3JMASA', encoding='utf-8', index_col=0, na_values='-').fillna(0)
+        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
       except:
-        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv?token=GHSAT0AAAAAABZLORHNL6MJFQW3TAC2CBHIY3JMASA', encoding='latin', index_col=0, na_values='-').fillna(0)
+        data = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ERI.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
     # Obtener los periodos de estudio
     years = data.columns.tolist()
 
@@ -387,12 +386,12 @@ if authentication_status:
       st.subheader('Parámetros de Selección')
       
       # Importar información de las inversiones de los concesionarios
-      investments = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Investments.csv?token=GHSAT0AAAAAABZLORHNL6MJFQW3TAC2CBHIY3JMASA', encoding='latin', na_values='-').fillna(0)
-      investments = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Investments%20Mod.csv?token=GHSAT0AAAAAABZLORHNL6MJFQW3TAC2CBHIY3JMASA', encoding='latin', na_values='-').fillna(0)
+      investments = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Investments.csv', encoding='latin', na_values='-').fillna(0)
+      investments = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Investments%20Mod.csv', encoding='latin', na_values='-').fillna(0)
       
       # Importar información de los flujos de efectivo de los concesionarios
-      cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows.csv?token=GHSAT0AAAAAABZLORHNL6MJFQW3TAC2CBHIY3JMASA', encoding='utf-8', na_values='-').fillna(0)
-      cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows%20Mod.csv?token=GHSAT0AAAAAABZLORHNL6MJFQW3TAC2CBHIY3JMASA', encoding='utf-8', na_values='-').fillna(0)
+      cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows.csv', encoding='utf-8', na_values='-').fillna(0)
+      cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows%20Mod.csv', encoding='utf-8', na_values='-').fillna(0)
 
       # Evaluar si se pide deflactar o no
       if ammounts=='Saldos Constantes':
@@ -426,7 +425,7 @@ if authentication_status:
       cf_type = st.selectbox(label='Seleccione el Tipo de Flujo de Efectivo a Analizar', options=sorted(['Ingresos Totales', 'NOPAT', 'Utilidad de  Operación', 'Utilidad Neta']))
       
       # Importar información del WACC
-      wacc = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/WACC.csv?token=GHSAT0AAAAAABZLORHNL6MJFQW3TAC2CBHIY3JMASA', encoding='utf-8', na_values='-').fillna(0)
+      wacc = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/WACC.csv', encoding='utf-8', na_values='-').fillna(0)
       
       # Integrar una lista de los años disponibles del WACC
       year = st.selectbox(label='Seleccione el Año del que Desea el WACC', options=sorted(wacc['Año'].unique().tolist(), reverse=True)[1:])
@@ -466,9 +465,9 @@ if authentication_status:
     
     # Importar información para el cálculo de la tasa de reinversión
     try:
-      balance = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ESF.csv?token=GHSAT0AAAAAABZLORHNL6MJFQW3TAC2CBHIY3JMASA', encoding='utf-8', index_col=0, na_values='-').fillna(0)
+      balance = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ESF.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
     except:
-      balance = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ESF.csv?token=GHSAT0AAAAAABZLORHNL6MJFQW3TAC2CBHIY3JMASA', encoding='latin', index_col=0, na_values='-').fillna(0)
+      balance = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/{licensee}%20ESF.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
     
     # Calcular VPN
     vpn = df['Flujos de Efectivo Descontados'].sum()
