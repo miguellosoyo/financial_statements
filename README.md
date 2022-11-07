@@ -1,2 +1,4 @@
-# Financial Statements
-In this repository we present the financial statements from a variety public enterprices, using a Streamlit App for interactive visualization.
+# Estados Financieros y Regulación Económica
+Emplear los estados financieros para evaluar la posición económica de una empresa, permite acceder a factores de rentabilidad, apalancamiento y crecimiento intertemporal.
+
+
