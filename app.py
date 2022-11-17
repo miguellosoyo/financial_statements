@@ -11,10 +11,10 @@ pd.options.display.max_rows = None
 pd.options.display.max_columns = None
 
 # Definir una función para calcular la variable del deflactor
-def deflactor_serie(year:int, token:str):
+def deflactor_serie(year, token):
 
   # Importar información del PIB Nominal y Real
-  deflactors = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Cifras%20del%20PIB%20Nominal-Real.csv?token={token}', encoding='latin', index_col=0)
+  deflactors = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Cifras%20del%20PIB%20Nominal-Real.csv?token={token}', encoding='latin', index_col=0)
     
   # Establecer el índice de precios base 2013
   deflactors['INPC'] = deflactors['PIB Nominal'].div(deflactors['PIB Real'])
