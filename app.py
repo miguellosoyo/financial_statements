@@ -106,7 +106,7 @@ def irr(values, guess=0.1, tol=1e-12, maxiter=100):
   return np.nan
 
 # Definir usuarios y contraseñas
-names = ['Miguel, 'César','Angélica', 'Paola', 'Edith']
+names = ['Miguel', 'César','Angélica', 'Paola', 'Edith']
 usernames = ['miguel_losoyo, 'cesar_artf','angelica_artf', 'paola_artf', 'edith_artf']
 passwords = ['Sandía99.', 'Sandía99.','Sandía99.', 'Sandía99.', 'Sandía99.']
 
