@@ -107,7 +107,7 @@ def irr(values, guess=0.1, tol=1e-12, maxiter=100):
 
 # Definir usuarios y contraseñas
 names = ['Miguel', 'César','Angélica', 'Paola', 'Edith']
-usernames = ['miguel_losoyo, 'cesar_artf','angelica_artf', 'paola_artf', 'edith_artf']
+usernames = ['miguel_losoyo', 'cesar_artf','angelica_artf', 'paola_artf', 'edith_artf']
 passwords = ['Sandía99.', 'Sandía99.','Sandía99.', 'Sandía99.', 'Sandía99.']
 
 # Definir variables vacías para usuario y contraseña
