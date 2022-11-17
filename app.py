@@ -637,70 +637,70 @@ if authentication_status:
     st_echarts(options=options, height="400px")
     
     # Integrar un título y subtitulo para el gráfico
-    st.subheader(f"Contraste Factor de Ingreso e Inversión",)
-    st.text(f"Información Financiera de {licensee}")
+    # st.subheader(f"Contraste Factor de Ingreso e Inversión",)
+    # st.text(f"Información Financiera de {licensee}")
 
     # Definir los colores a asignar a las barras y línea, respectivamente
-    colors = ['#C7A479', '#1E5847']
+    # colors = ['#C7A479', '#1E5847']
     
     # Definir las especificaciones de un gráfico de barras y línea
-    options = {"color": colors,
-               "tooltip":{
-                   "trigger": "axis", "axisPointer": {"type": "shadow"}
-                   },
-               "grid":{
-                   "right": "20%",
-                   },
-               "legend":{
-                   "data": [inv_type, cf_type],
-                   },
-               "xAxis":[
-                        {"type": "category",
-                         "axisTick":{
-                             "alignWithLabel":True,
-                             },
-                         "data": investments['Año'].tolist(),
-                         },
-                        ],
-               "yAxis":[
-                        {"type": "value",
-                         "name": f"{inv_type}",
-                         "position": "right",
-                         "alignTicks": True,
-                         "axisLine":{
-                             "show": True,
-                             "lineStyle": {
-                                 "color": colors[0]
-                                 }
-                                 },
-                         },
-                        {"type": "value",
-                         "name": f"{cf_type}",
-                         "position": "left",
-                         "alignTicks": True,
-                         "axisLine": {
-                         "show": True,
-                         "lineStyle": {
-                             "color": colors[1]
-                             }
-                             },
-                         }
-                        ],
-               "series":[
-                         {"name": f'{inv_type}',
-                          "type": "bar",
-                          "data": investments[inv_type].values.tolist()
-                          },
-                         {"name": f"{cf_type}",
-                          "type": "line",
-                          "yAxisIndex": 2,
-                          "data": cash_flows[cf_type].values.tolist()
-                          }
-                         ]
-               }
+    # options = {"color": colors,
+    #           "tooltip":{
+    #               "trigger": "axis", "axisPointer": {"type": "shadow"}
+    #               },
+    #           "grid":{
+    #               "right": "20%",
+    #               },
+    #           "legend":{
+    #               "data": [inv_type, cf_type],
+    #               },
+    #           "xAxis":[
+    #                    {"type": "category",
+    #                     "axisTick":{
+    #                         "alignWithLabel":True,
+    #                         },
+    #                     "data": investments['Año'].tolist(),
+    #                     },
+    #                    ],
+    #           "yAxis":[
+    #                    {"type": "value",
+    #                     "name": f"{inv_type}",
+    #                     "position": "right",
+    #                     "alignTicks": True,
+    #                     "axisLine":{
+    #                         "show": True,
+    #                         "lineStyle": {
+    #                             "color": colors[0]
+    #                             }
+    #                             },
+    #                     },
+    #                    {"type": "value",
+    #                     "name": f"{cf_type}",
+    #                     "position": "left",
+    #                     "alignTicks": True,
+    #                     "axisLine": {
+    #                     "show": True,
+    #                     "lineStyle": {
+    #                         "color": colors[1]
+    #                         }
+    #                         },
+    #                     }
+    #                    ],
+    #           "series":[
+    #                     {"name": f'{inv_type}',
+    #                      "type": "bar",
+    #                      "data": investments[inv_type].values.tolist()
+    #                      },
+    #                     {"name": f"{cf_type}",
+    #                      "type": "line",
+    #                      "yAxisIndex": 2,
+    #                      "data": cash_flows[cf_type].values.tolist()
+    #                      }
+    #                     ]
+    #           }
     
     # Integrar gráfica de barras y línea
-    st_echarts(options=options, height="500px")
+    # st_echarts(options=options, height="500px")
 
 # Evaluar si son incorrectos los datos de ingreso
 elif authentication_status==False:
