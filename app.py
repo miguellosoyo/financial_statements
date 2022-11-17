@@ -165,7 +165,7 @@ if authentication_status:
     if ammounts=='Saldos Corrientes':
       
       # Importar la información de los deflactores
-      deflactors = deflactor_serie(2020)
+      deflactors = deflactor_serie(2020, token)
 
     elif ammounts=='Saldos Constantes':
     
