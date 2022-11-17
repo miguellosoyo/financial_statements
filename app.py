@@ -173,7 +173,7 @@ if authentication_status:
       year_deflact = expander_deflact.selectbox('Seleccione el Año Base', options=sorted(range(1997,2022), reverse=True))
 
       # Importar la información de los deflactores
-      deflactors = deflactor_serie(year_deflact, token)    
+      deflactors = deflactor_serie(year_deflact)    
   
   # Evaluar si es un análisis financiero el que se quiere realizar
   if analysis=='Estados Financieros':
