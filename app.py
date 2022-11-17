@@ -11,7 +11,7 @@ pd.options.display.max_rows = None
 pd.options.display.max_columns = None
 
 # Definir una función para calcular la variable del deflactor
-def deflactor_serie(year:int):
+def deflactor_serie(year:int, token:str):
 
   # Importar información del PIB Nominal y Real
   deflactors = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Cifras%20del%20PIB%20Nominal-Real.csv?token={token}', encoding='latin', index_col=0)
@@ -173,7 +173,7 @@ if authentication_status:
       year_deflact = expander_deflact.selectbox('Seleccione el Año Base', options=sorted(range(1997,2022), reverse=True))
 
       # Importar la información de los deflactores
-      deflactors = deflactor_serie(year_deflact)    
+      deflactors = deflactor_serie(year_deflact, token)    
   
   # Evaluar si es un análisis financiero el que se quiere realizar
   if analysis=='Estados Financieros':
