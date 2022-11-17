@@ -389,11 +389,11 @@ if authentication_status:
       st.subheader('Parámetros de Selección')
       
       # Importar información de las inversiones de los concesionarios
-      investments = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Investments.csv?token={token}', encoding='latin', na_values='-').fillna(0)
+      # investments = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Investments.csv?token={token}', encoding='latin', na_values='-').fillna(0)
       investments = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Investments%20Mod.csv?token={token}', encoding='latin', na_values='-').fillna(0)
       
       # Importar información de los flujos de efectivo de los concesionarios
-      cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows.csv?token={token}', encoding='utf-8', na_values='-').fillna(0)
+      # cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows.csv?token={token}', encoding='utf-8', na_values='-').fillna(0)
       cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows%20Mod.csv?token={token}', encoding='utf-8', na_values='-').fillna(0)
 
       # Evaluar si se pide deflactar o no
@@ -428,7 +428,8 @@ if authentication_status:
       cf_type = st.selectbox(label='Seleccione el Tipo de Flujo de Efectivo a Analizar', options=sorted(['Ingresos Totales', 'NOPAT', 'Utilidad de  Operación', 'Utilidad Neta']))
       
       # Importar información del WACC
-      wacc = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/WACC.csv?token={token}', encoding='utf-8', na_values='-').fillna(0)
+      # wacc = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/WACC.csv?token={token}', encoding='utf-8', na_values='-').fillna(0)
+      wacc = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/WACC.csv?token={toke}', encoding='utf-8', na_values='-').fillna(0)
       
       # Integrar una lista de los años disponibles del WACC
       year = st.selectbox(label='Seleccione el Año del que Desea el WACC', options=sorted(wacc['Año'].unique().tolist(), reverse=True)[1:])
