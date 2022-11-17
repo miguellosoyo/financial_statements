@@ -488,19 +488,19 @@ if authentication_status:
     # Importar información para el cálculo de la tasa de reinversión
     if licensee=='KCSM':
       try:
-        balance = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/KCSM%20ESF.csv?token=GHSAT0AAAAAABZLORHNLAQUR7X25Y4FG5OSY3WPI2Q', encoding='utf-8', index_col=0, na_values='-').fillna(0)
+        balance = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/KCSM%20ESF.csv?token=GHSAT0AAAAAABZLORHMIHR7SBKCFV2RMEFGY3WPQZA', encoding='utf-8', index_col=0, na_values='-').fillna(0)
       except:
-        balance = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/KCSM%20ESF.csv?token=GHSAT0AAAAAABZLORHNLAQUR7X25Y4FG5OSY3WPI2Q', encoding='latin', index_col=0, na_values='-').fillna(0)
+        balance = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/KCSM%20ESF.csv?token=GHSAT0AAAAAABZLORHMIHR7SBKCFV2RMEFGY3WPQZA', encoding='latin', index_col=0, na_values='-').fillna(0)
     elif licensee=='Ferrosur':
       try:
-        balance = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferrosur%20ESF.csv?token=GHSAT0AAAAAABZLORHM4G34N7DIVV7LNFLCY3WPJHA', encoding='utf-8', index_col=0, na_values='-').fillna(0)
+        balance = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferrosur%20ESF.csv?token=GHSAT0AAAAAABZLORHNXI2DWO3L4UBM36Z6Y3WPQJA', encoding='utf-8', index_col=0, na_values='-').fillna(0)
       except:
-        balance = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferrosur%20ESF.csv?token=GHSAT0AAAAAABZLORHM4G34N7DIVV7LNFLCY3WPJHA', encoding='latin', index_col=0, na_values='-').fillna(0)
+        balance = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferrosur%20ESF.csv?token=GHSAT0AAAAAABZLORHNXI2DWO3L4UBM36Z6Y3WPQJA', encoding='latin', index_col=0, na_values='-').fillna(0)
     else:
       try:
-        balance = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferromex%20ESF.csv?token=GHSAT0AAAAAABZLORHNWVTWHI6THZUSSWUUY3WPJTA', encoding='utf-8', index_col=0, na_values='-').fillna(0)
+        balance = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferromex%20ESF.csv?token=GHSAT0AAAAAABZLORHM4HK4GUR5UZIKUPGUY3WPPQQ', encoding='utf-8', index_col=0, na_values='-').fillna(0)
       except:
-        balance = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferromex%20ESF.csv?token=GHSAT0AAAAAABZLORHNWVTWHI6THZUSSWUUY3WPJTA', encoding='latin', index_col=0, na_values='-').fillna(0)
+        balance = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferromex%20ESF.csv?token=GHSAT0AAAAAABZLORHM4HK4GUR5UZIKUPGUY3WPPQQ', encoding='latin', index_col=0, na_values='-').fillna(0)
     
     # Calcular VPN
     vpn = df['Flujos de Efectivo Descontados'].sum()
