@@ -14,7 +14,7 @@ pd.options.display.max_columns = None
 def deflactor_serie(year):
 
   # Importar información del PIB Nominal y Real
-  deflactors = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Cifras%20del%20PIB%20Nominal-Real.csv?token=GHSAT0AAAAAABZLORHNJ2ZSKCFJYWOYGK3UY3WPB3A', encoding='latin', index_col=0)
+  deflactors = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Cifras%20del%20PIB%20Nominal-Real.csv', encoding='latin', index_col=0)
     
   # Establecer el índice de precios base 2013
   deflactors['INPC'] = deflactors['PIB Nominal'].div(deflactors['PIB Real'])
@@ -195,36 +195,36 @@ if authentication_status:
     if report=='Balance General':
       if licensee=='KCSM':
         try:
-          data = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/KCSM%20ESF.csv?token=GHSAT0AAAAAABZLORHN3MXSKFNTSJQANRTQY3WPGYA', encoding='utf-8', index_col=0, na_values='-').fillna(0)
+          data = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/KCSM%20ESF.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
         except:
-          data = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/KCSM%20ESF.csv?token=GHSAT0AAAAAABZLORHN3MXSKFNTSJQANRTQY3WPGYA', encoding='latin', index_col=0, na_values='-').fillna(0)
+          data = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/KCSM%20ESF.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
       elif licensee=='Ferrosur':
         try:
-          data = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferrosur%20ESF.csv?token=GHSAT0AAAAAABZLORHMW7IYQOWXYTZYVDGCY3WPHJQ', encoding='utf-8', index_col=0, na_values='-').fillna(0)
+          data = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferrosur%20ESF.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
         except:
-          data = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferrosur%20ESF.csv?token=GHSAT0AAAAAABZLORHMW7IYQOWXYTZYVDGCY3WPHJQ', encoding='latin', index_col=0, na_values='-').fillna(0)
+          data = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferrosur%20ESF.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
       else:
         try:
-          data = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferromex%20ESF.csv?token=GHSAT0AAAAAABZLORHMA22XU5GGFVFSO73WY3WPH3Q', encoding='utf-8', index_col=0, na_values='-').fillna(0)
+          data = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferromex%20ESF.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
         except:
-          data = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferromex%20ESF.csv?token=GHSAT0AAAAAABZLORHMA22XU5GGFVFSO73WY3WPH3Q', encoding='latin', index_col=0, na_values='-').fillna(0)
+          data = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferromex%20ESF.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
              
     elif report=='Estado de Resultados':
       if licensee=='KCSM':
         try:
-          data = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/KCSM%20ERI.csv?token=GHSAT0AAAAAABZLORHNLAQUR7X25Y4FG5OSY3WPI2Q', encoding='utf-8', index_col=0, na_values='-').fillna(0)
+          data = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/KCSM%20ERI.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
         except:
-          data = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/KCSM%20ERI.csv?token=GHSAT0AAAAAABZLORHNLAQUR7X25Y4FG5OSY3WPI2Q', encoding='latin', index_col=0, na_values='-').fillna(0)
+          data = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/KCSM%20ERI.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
       elif licensee=='Ferrosur':
         try:
-          data = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferrosur%20ERI.csv?token=GHSAT0AAAAAABZLORHM4G34N7DIVV7LNFLCY3WPJHA', encoding='utf-8', index_col=0, na_values='-').fillna(0)
+          data = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferrosur%20ERI.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
         except:
-          data = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferrosur%20ERI.csv?token=GHSAT0AAAAAABZLORHM4G34N7DIVV7LNFLCY3WPJHA', encoding='latin', index_col=0, na_values='-').fillna(0)
+          data = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferrosur%20ERI.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
       else:
         try:
-          data = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferromex%20ERI.csv?token=GHSAT0AAAAAABZLORHNWVTWHI6THZUSSWUUY3WPJTA', encoding='utf-8', index_col=0, na_values='-').fillna(0)
+          data = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferromex%20ERI.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
         except:
-          data = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferromex%20ERI.csv?token=GHSAT0AAAAAABZLORHNWVTWHI6THZUSSWUUY3WPJTA', encoding='latin', index_col=0, na_values='-').fillna(0)
+          data = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferromex%20ERI.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
     
              # Obtener los periodos de estudio
     years = data.columns.tolist()
@@ -408,11 +408,11 @@ if authentication_status:
       
       # Importar información de las inversiones de los concesionarios
       # investments = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Investments.csv?token={token}', encoding='latin', na_values='-').fillna(0)
-      investments = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Investments%20Mod.csv?token=GHSAT0AAAAAABZLORHM4JVS7UHA2ZZPNVLEY3WPMYA', encoding='latin', na_values='-').fillna(0)
+      investments = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Investments%20Mod.csv', encoding='latin', na_values='-').fillna(0)
       
       # Importar información de los flujos de efectivo de los concesionarios
       # cash_flows = pd.read_csv(f'https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows.csv?token={token}', encoding='utf-8', na_values='-').fillna(0)
-      cash_flows = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows%20Mod.csv?token=GHSAT0AAAAAABZLORHNBCHSJB3YWDSEEKKWY3WPMMA', encoding='utf-8', na_values='-').fillna(0)
+      cash_flows = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/Cash%20Flows%20Mod.csv', encoding='utf-8', na_values='-').fillna(0)
 
       # Evaluar si se pide deflactar o no
       if ammounts=='Saldos Constantes':
@@ -447,7 +447,7 @@ if authentication_status:
       
       # Importar información del WACC
       # wacc = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/WACC.csv?token={token}', encoding='utf-8', na_values='-').fillna(0)
-      wacc = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/WACC.csv?token=GHSAT0AAAAAABZLORHMWJFOLBFHWJAIDTKQY3WPL7Q', encoding='utf-8', na_values='-').fillna(0)
+      wacc = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/IRR/WACC.csv', encoding='utf-8', na_values='-').fillna(0)
       
       # Integrar una lista de los años disponibles del WACC
       year = st.selectbox(label='Seleccione el Año del que Desea el WACC', options=sorted(wacc['Año'].unique().tolist(), reverse=True)[1:])
@@ -488,19 +488,19 @@ if authentication_status:
     # Importar información para el cálculo de la tasa de reinversión
     if licensee=='KCSM':
       try:
-        balance = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/KCSM%20ESF.csv?token=GHSAT0AAAAAABZLORHMIHR7SBKCFV2RMEFGY3WPQZA', encoding='utf-8', index_col=0, na_values='-').fillna(0)
+        balance = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/KCSM%20ESF.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
       except:
-        balance = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/KCSM%20ESF.csv?token=GHSAT0AAAAAABZLORHMIHR7SBKCFV2RMEFGY3WPQZA', encoding='latin', index_col=0, na_values='-').fillna(0)
+        balance = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/KCSM%20ESF.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
     elif licensee=='Ferrosur':
       try:
-        balance = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferrosur%20ESF.csv?token=GHSAT0AAAAAABZLORHNXI2DWO3L4UBM36Z6Y3WPQJA', encoding='utf-8', index_col=0, na_values='-').fillna(0)
+        balance = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferrosur%20ESF.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
       except:
-        balance = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferrosur%20ESF.csv?token=GHSAT0AAAAAABZLORHNXI2DWO3L4UBM36Z6Y3WPQJA', encoding='latin', index_col=0, na_values='-').fillna(0)
+        balance = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferrosur%20ESF.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
     else:
       try:
-        balance = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferromex%20ESF.csv?token=GHSAT0AAAAAABZLORHM4HK4GUR5UZIKUPGUY3WPPQQ', encoding='utf-8', index_col=0, na_values='-').fillna(0)
+        balance = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferromex%20ESF.csv', encoding='utf-8', index_col=0, na_values='-').fillna(0)
       except:
-        balance = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferromex%20ESF.csv?token=GHSAT0AAAAAABZLORHM4HK4GUR5UZIKUPGUY3WPPQQ', encoding='latin', index_col=0, na_values='-').fillna(0)
+        balance = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/financial_statements/main/Ferromex%20ESF.csv', encoding='latin', index_col=0, na_values='-').fillna(0)
     
     # Calcular VPN
     vpn = df['Flujos de Efectivo Descontados'].sum()
