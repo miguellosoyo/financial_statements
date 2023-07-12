@@ -106,9 +106,9 @@ def irr(values, guess=0.1, tol=1e-12, maxiter=100):
   return np.nan
 
 # Definir usuarios y contraseñas
-names = ['Usuario', 'Miguel', 'César','Angélica', 'Paola', 'Edith']
-usernames = ['usuario_001', 'miguel_losoyo', 'cesar_artf','angelica_artf', 'paola_artf', 'edith_artf']
-passwords = ['usuario_001', 'Sandía99.', 'Sandía99.','Sandía99.', 'Sandía99.', 'Sandía99.']
+names = ['Usuario',]
+usernames = ['usuario_001',]
+passwords = ['usuario_001',]
 
 # Definir variables vacías para usuario y contraseña
 username = '' 
